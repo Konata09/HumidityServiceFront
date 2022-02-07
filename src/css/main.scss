@@ -1,0 +1,163 @@
+:root {
+  --bg: #f2f5f8;
+  --main: #fff;
+  --t: #37475b;
+  --t-l: #64778b;
+  --logo: #000;
+  --link: #1f6dda;
+  --title: #475c6e;
+  --fab: #fff;
+  --scroll-y: .35rem;
+  --scroll-x: .28rem;
+  --t-s: #2f3d4e;
+  --alt: #e6e8ee;
+  --link-hover: #363636;
+  --hover-bg: #eceef2;
+  --tag: #eceef2;
+  --border: #e3e6eb;
+  --c-bg: #f4f5f7;
+  --code: #405363;
+  --olay: hsla(0, 0%, 100%, 0.9);
+}
+
+
+$theme: #00b6ff;
+$hover-bg: #efefef;
+$active-bg: rgba(57, 146, 255, .125);
+$link: #1f6dda;
+$main-bg: #f2f5f8;
+$main: #fff;
+$text: #363636;
+$border: #e8ebee;
+$shadow: 0 4px 10px rgba(0, 2, 4, .06), 0 0 1px rgba(0, 2, 4, .11);
+$radius: 0.5rem;
+
+
+*, ::before, ::after {
+  margin: 0;
+  padding: 0;
+  border-width: 0;
+  border-style: solid;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: $text;
+  transition: all 0.15s ease;
+}
+
+ul li {
+  list-style: none;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: $main-bg;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-center {
+  align-items: center;
+  justify-content: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+
+header {
+  background-color: $main;
+  box-shadow: $shadow;
+  padding: 0 2rem;
+  z-index: 5;
+  position: relative;
+
+  #nav {
+    align-items: stretch;
+    flex-grow: 1;
+  }
+
+  .logo {
+    height: 3.5rem;
+  }
+
+  .header-title {
+    font-size: 1.5rem;
+  }
+}
+
+.header-left {
+  margin-right: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-right {
+  align-self: center;
+}
+
+.main-layout {
+}
+
+#menu {
+  background-color: $main;
+  width: 15rem;
+  height: 100vh;
+  position: static;
+  box-shadow: 0 10px 10px rgba(0, 2, 4, .06), 0 1px 1px rgba(0, 2, 4, .11);
+  padding-top: 1.5rem;
+
+  ul {
+    li {
+      margin: 1rem 1.2rem;
+
+      a {
+        padding: 0.5rem 1.2rem;
+        display: block;
+        font-size: 1.1rem;
+        border-radius: $radius;
+
+        &:hover {
+          background-color: $hover-bg;
+        }
+      }
+
+      a.active {
+        color: $link;
+        background-color: $active-bg;
+      }
+
+      #menu-problem:after {
+        margin: 0 0.4rem 0 0.4rem;
+        content: '99';
+        font-size: 1rem;
+        font-weight: bold;
+        line-height: 1.1rem;
+        background-color: rgb(241, 64, 60);
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        color: #fff;
+        text-align: center;
+        display: inline-block;
+        border-radius: 2rem;
+        border: 1px solid rgba(0, 0, 0, 0);
+      }
+    }
+
+    .menu-setting:before {
+      content: '';
+      width: auto;
+      display: block;
+      margin: 0 0.2rem 1rem 0.2rem;
+      border-top: 1px solid $border;
+    }
+  }
+}
