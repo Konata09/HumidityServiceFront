@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import logo from './logo.svg';
 import './App.scss';
 import {Api} from "./utils/api";
-import {LStorage} from "./utils/util";
+import {SStorage} from "./utils/util";
 import {BrowserRouter, NavLink, Route, Routes} from "react-router-dom";
 import {DashboardPage} from "./page/Dashboard";
 import {SettingsPage} from "./page/Settings";
@@ -13,7 +13,7 @@ function App() {
   useEffect(() => {
     Api.login("admin", "admin").then(r => {
       if (r.retcode === 0) {
-        LStorage.set("token", r.data.token);
+        SStorage.set("token", r.data.token);
       }
     })
   }, []);

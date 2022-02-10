@@ -1,4 +1,6 @@
 // sessionStorage localStorage 操作
+import dayjs from "dayjs";
+
 export const SStorage = {
   set: (k: string, v: string) => {
     try {
@@ -40,4 +42,7 @@ export const LStorage = {
     } catch (e) {
     }
   }
+}
+export const dayjsToString = (date: Date): string => {
+  return dayjs(date).format("YYYY-MM-DD HH:mm:ss");
 }

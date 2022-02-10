@@ -1,4 +1,4 @@
-import {LStorage} from "./util";
+import {SStorage} from "./util";
 
 const SEVERITY = {
   INFO: 1,
@@ -20,15 +20,24 @@ const showMessage = (message: string, severity: number): void => {
   }
 }
 
-const fetchApi = async (method: string, path: string, jsonBody?: object, params?: Record<string, string>) => {
+const fetchApi = async (method: string, path: string, needAuth: boolean, jsonBody?: object, params?: Record<string, string>) => {
   if (params) {
     path += "?" + new URLSearchParams(params);
+  }
+  let token;
+  if (needAuth) {
+    token = SStorage.get("token");
+    if (!token) {
+      showMessage("请先登录", SEVERITY.ERROR);
+      return null;
+    }
   }
   let res = await fetch(path, {
     method: method,
     body: JSON.stringify(jsonBody),
-    headers: {Authorization: "Bearer " + LStorage.get("token")}
+    headers: {Authorization: "Bearer " + token}
   });
+  // console.debug(res)
   if (res.ok) {
     let jsonData = await res.json();
     if (jsonData.retcode !== 0) {
@@ -43,69 +52,69 @@ const fetchApi = async (method: string, path: string, jsonBody?: object, params?
 
 export const Api = {
   login: (username: string, password: string) => {
-    return fetchApi("POST", "/api/v1/login", {
+    return fetchApi("POST", "/api/v1/login", false, {
       username: username,
       password: password
     })
   },
   refreshToken: (username: string, password: string) => {
-    return fetchApi("POST", "/api/v1/refreshToken")
+    return fetchApi("POST", "/api/v1/refreshToken", true)
   },
   adminGetUser: () => {
-    return fetchApi("GET", "/api/v1/admin/user")
+    return fetchApi("GET", "/api/v1/admin/user", true)
   },
   adminPutUser: (username: string, password: string, rolename: string) => {
-    return fetchApi("PUT", "/api/v1/admin/user", {
+    return fetchApi("PUT", "/api/v1/admin/user", true, {
       username: username,
       password: password,
       rolename: rolename
     })
   },
   adminPostUser: (uid: string, newPassword: string) => {
-    return fetchApi("POST", "/api/v1/admin/user", {
+    return fetchApi("POST", "/api/v1/admin/user", true, {
       uid: uid,
       new_pass: newPassword
     })
   },
   adminDeleteUser: (uid: string) => {
-    return fetchApi("DELETE", "/api/v1/admin/user", {
+    return fetchApi("DELETE", "/api/v1/admin/user", true, {
       uid: uid
     })
   },
   userChangePassword: (uid: string, oldPassword: string, newPassword: string) => {
-    return fetchApi("POST", "/api/v1/changePassword", {
+    return fetchApi("POST", "/api/v1/changePassword", true, {
       uid: uid,
       old_pass: oldPassword,
       new_pass: newPassword
     })
   },
   userChangeUsername: (username: string) => {
-    return fetchApi("POST", "/api/v1/user", {
+    return fetchApi("POST", "/api/v1/user", true, {
       username: username
     })
   },
   getPipelines: () => {
-    return fetchApi("GET", "api/v1/pipeline")
+    return fetchApi("GET", "api/v1/pipeline", true)
   },
   getNodes: (pipeline: string) => {
-    return fetchApi("GET", "api/v1/nodes", undefined, {
+    return fetchApi("GET", "api/v1/nodes", true, undefined, {
       pipeline: pipeline
     })
   },
   getNodeHistory: (nodeId: string, startTime: string, endTime: string) => {
-    return fetchApi("GET", "api/v1/nodeHistory", undefined, {
+    return fetchApi("GET", "api/v1/nodeHistory", true, undefined, {
       id: nodeId,
       start: startTime,
       end: endTime
     })
   },
   getNode: (nodeId: string) => {
-    return fetchApi("GET", "api/v1/node", undefined, {
+    return fetchApi("GET", "api/v1/node", true, undefined, {
       id: nodeId
     })
   },
   postNode: (nodeId: string, tag: string, bias: number) => {
-    return fetchApi("POST", "api/v1/node", {
+    return fetchApi("POST", "api/v1/node", true, {
       id: nodeId,
       tag: tag,
       bias: bias

@@ -1,21 +1,13 @@
-import logo from "../logo.svg";
 import React from "react";
+import {RealtimeHistory} from "./RealtimeHistory";
 
 export const DashboardPage = () => {
   return (
-    <div className="App">
-      <img src={logo} className="App-logo" alt="logo"/>
-      <p>
-        Edit <code>src/App.tsx</code> and save to reload.
-      </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
+    <div className="flex-col dashboard flex-center">
+      <div className="card">
+        <div className="card-label">实时数据</div>
+        <RealtimeHistory/>
+      </div>
     </div>
   )
 }

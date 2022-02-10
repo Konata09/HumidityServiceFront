@@ -63,6 +63,11 @@ body {
   flex-direction: row;
 }
 
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
 .flex-center {
   align-items: center;
   justify-content: center;
@@ -110,7 +115,7 @@ header {
 #menu {
   background-color: $main;
   width: 15rem;
-  height: 100vh;
+  height: calc(100vh - 4rem);
   position: static;
   box-shadow: 0 10px 10px rgba(0, 2, 4, .06), 0 1px 1px rgba(0, 2, 4, .11);
   padding-top: 1.5rem;
@@ -159,5 +164,28 @@ header {
       margin: 0 0.2rem 1rem 0.2rem;
       border-top: 1px solid $border;
     }
+  }
+}
+
+.dashboard {
+  padding: 1.5rem;
+  margin: 0 auto;
+}
+
+#realtime-history-canvas {
+  width: calc(100vw - 22rem);
+  height: 45vh;
+}
+
+.card {
+  border-radius: $radius;
+  border: 1px solid rgba(0, 0, 0, 0);
+  background-color: $main;
+  box-shadow: $shadow;
+  padding: 0.6rem;
+
+  .card-label {
+    font-size: 1.3rem;
+    font-weight: bold;
   }
 }
