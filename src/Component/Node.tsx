@@ -1,17 +1,20 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Table} from "@arco-design/web-react";
 import {PipeContext} from "../Context";
 import {Api} from "../utils/api";
+import dayjs from "dayjs";
 
 
 export const NodePage = () => {
   const {pipeline, setPipeline} = useContext(PipeContext);
+  const [nodes, setNodes] = useState<object[]>([]);
 
   useEffect(() => {
-    console.log(pipeline.pipeId)
-    Api.getNodes(pipeline.pipeId, true, true).then((r) => {
-      console.log(r)
-    })
+    if (pipeline.pipeId) {
+      Api.getNodes(pipeline.pipeId, true, true).then((r) => {
+        setNodes(r.data.nodes)
+      })
+    }
   }, [pipeline.pipeId])
 
 
@@ -24,63 +27,42 @@ export const NodePage = () => {
 
   const columns = [
     {
-      title: 'Name',
-      dataIndex: 'name',
-    },
-    {
-      title: 'Salary',
-      dataIndex: 'salary',
-    },
-    {
-      title: 'Address',
-      dataIndex: 'address',
-    },
-    {
-      title: 'Email',
-      dataIndex: 'email',
-    },
+      title: 'ID',
+      dataIndex: 'id',
+    }, {
+      title: '标签',
+      dataIndex: 'tag',
+      sorter: (a: any, b: any) => {
+        const numReg = /[\d]+|\D+/g;
+        const t1 = a.tag;
+        const t2 = b.tag;
+        const m1 = t1.match(numReg);
+        const m2 = t2.match(numReg);
+        return m1[1] - m2[1];
+      }
+    }, {
+      title: '偏移',
+      dataIndex: 'bias',
+    }, {
+      title: '状态',
+      dataIndex: 'status',
+    }, {
+      title: '最新数据',
+      dataIndex: 'value',
+    }, {
+      title: '最新数据时间',
+      dataIndex: 'lastTime',
+      render: (t: string) => dayjs(t).format("YYYY-MM-DD HH:mm:ss")
+    }, {
+      title: '管道',
+      dataIndex: 'pipeline'
+    }
   ];
 
-  const data = [
-    {
-      key: '1',
-      name: 'Jane Doe',
-      salary: 23000,
-      address: '32 Park Road, London',
-      email: 'jane.doe@example.com',
-    },
-    {
-      key: '2',
-      name: 'Alisa Ross',
-      salary: 25000,
-      address: '35 Park Road, London',
-      email: 'alisa.ross@example.com',
-    },
-    {
-      key: '3',
-      name: 'Kevin Sandra',
-      salary: 22000,
-      address: '31 Park Road, London',
-      email: 'kevin.sandra@example.com',
-    },
-    {
-      key: '4',
-      name: 'Ed Hellen',
-      salary: 17000,
-      address: '42 Park Road, London',
-      email: 'ed.hellen@example.com',
-    },
-    {
-      key: '5',
-      name: 'William Smith',
-      salary: 27000,
-      address: '62 Park Road, London',
-      email: 'william.smith@example.com',
-    },
-  ];
   return (
     <div className="flex-col node-page flex-center">
-      <Table columns={columns} data={data}/>
+      <div className="page-title">节点列表</div>
+      <Table columns={columns} data={nodes} pagination={{sizeCanChange: true}}/>
       <div>{pipeline.pipeName}</div>
       <div>{pipeline.pipeId}</div>
     </div>

@@ -96,16 +96,19 @@ export const Api = {
   getPipelines: () => {
     return fetchApi("GET", "api/v1/pipeline", true)
   },
-  getNodes: (pipeline: string) => {
+  getNodes: (pipeline: string, needLatest: boolean, needStatus: boolean) => {
     return fetchApi("GET", "api/v1/nodes", true, undefined, {
-      pipeline: pipeline
+      pipeline: pipeline,
+      value: needLatest ? "true" : "false",
+      status: needStatus ? "true" : "false"
     })
   },
-  getNodeHistory: (nodeId: string, startTime: string, endTime: string) => {
+  getNodeHistory: (nodeId: string, startTime: string, endTime: string, every?: string) => {
     return fetchApi("GET", "api/v1/nodeHistory", true, undefined, {
       id: nodeId,
       start: startTime,
-      end: endTime
+      end: endTime,
+      every: every ? every : ""
     })
   },
   getNode: (nodeId: string) => {
@@ -118,6 +121,19 @@ export const Api = {
       id: nodeId,
       tag: tag,
       bias: bias
+    })
+  },
+  getProblems: () => {
+    return fetchApi("GET", "api/v1/problems", true)
+  },
+  getProblem: (proId: string) => {
+    return fetchApi("GET", "api/v1/problem", true, undefined, {
+      id: proId
+    })
+  },
+  setProblemAck: (proId: string) => {
+    return fetchApi("POST", "api/v1/problem/ack", true, {
+      id: proId
     })
   }
 }

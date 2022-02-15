@@ -60,7 +60,7 @@ module.exports = function (proxy, allowedHost) {
             // use an image, put it in `src` and `import` it from JavaScript instead.
             directory: paths.appPublic,
             publicPath: [paths.publicUrlOrPath],
-            // By default files from `contentBase` will not trigger a page reload.
+            // By default files from `contentBase` will not trigger a Component reload.
             watch: {
                 // Reportedly, this avoids CPU overload on some systems.
                 // https://github.com/facebook/create-react-app/issues/293

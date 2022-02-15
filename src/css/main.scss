@@ -21,7 +21,7 @@
 }
 
 
-$theme: #00b6ff;
+$theme: rgb(67, 128, 255);
 $hover-bg: #efefef;
 $active-bg: rgba(57, 146, 255, .125);
 $link: #1f6dda;
@@ -30,6 +30,7 @@ $main: #fff;
 $text: #363636;
 $border: #e8ebee;
 $shadow: 0 4px 10px rgba(0, 2, 4, .06), 0 0 1px rgba(0, 2, 4, .11);
+$shadow-btn: 0 2px 5px rgba(0, 2, 5, .2), 0 0 1px rgba(0, 2, 4, .4);
 $radius: 0.5rem;
 
 
@@ -41,9 +42,12 @@ $radius: 0.5rem;
   box-sizing: border-box;
 }
 
+*:not(.iconfont,.arco-btn>span,.arco-checkbox-mask-icon,.arco-checkbox-mask-icon>path) {
+  color: $text;
+}
+
 a {
   text-decoration: none;
-  color: $text;
   transition: all 0.15s ease;
 }
 
@@ -56,6 +60,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: $main-bg;
+  height: 100vh;
 }
 
 .flex-row {
@@ -83,7 +88,9 @@ header {
   box-shadow: $shadow;
   padding: 0 2rem;
   z-index: 5;
-  position: relative;
+  position: fixed;
+  width: 100vw;
+  min-height: 3.5rem;
 
   #nav {
     align-items: stretch;
@@ -110,15 +117,24 @@ header {
 }
 
 .main-layout {
+  padding-top: 3rem;
+}
+
+#menu-wrapper {
+  width: 15rem;
+  position: relative;
 }
 
 #menu {
   background-color: $main;
+  position: fixed;
+  top: 3rem;
   width: 15rem;
-  height: calc(100vh - 4rem);
-  position: static;
+  height: 100vh;
   box-shadow: 0 10px 10px rgba(0, 2, 4, .06), 0 1px 1px rgba(0, 2, 4, .11);
   padding-top: 1.5rem;
+  z-index: 3;
+  flex-shrink: 0;
 
   ul {
     li {
@@ -142,11 +158,12 @@ header {
 
       #menu-problem:after {
         margin: 0 0.4rem 0 0.4rem;
-        content: '99';
+        content: '0';
         font-size: 1rem;
         font-weight: bold;
         line-height: 1.1rem;
-        background-color: rgb(241, 64, 60);
+        //background-color: rgb(241, 64, 60);
+        background-color: $theme;
         padding-left: 0.5rem;
         padding-right: 0.5rem;
         color: #fff;
@@ -172,9 +189,16 @@ header {
   margin: 0 auto;
 }
 
+.node-page {
+  padding: 1.5rem;
+  width: 100%;
+  margin: 0 auto;
+  background-color: $main;
+}
+
 #realtime-history-canvas {
   width: calc(100vw - 22rem);
-  height: 45vh;
+  height: 40vh;
 }
 
 .card {
@@ -183,9 +207,48 @@ header {
   background-color: $main;
   box-shadow: $shadow;
   padding: 0.6rem;
+  margin: 1rem auto;
+}
 
-  .card-label {
-    font-size: 1.3rem;
-    font-weight: bold;
+.card-label {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 0.5rem 1.5rem 0.5rem 1.5rem;
+}
+
+.page-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin: 1rem 3rem 1rem 3rem;
+  align-self: flex-start;
+}
+
+.datetime-picker .select-picker {
+  margin: 1rem 0 1rem 1rem;
+}
+
+.history-query-container {
+  padding: 1rem 2rem 1.5rem 2rem;
+  align-items: center;
+
+  .arco-btn {
+    margin: auto 1rem;
   }
+}
+
+.picker-label {
+  font-size: 1rem;
+  margin: 0 0.5rem 0 1rem;
+}
+
+.arco-btn-primary .arco-btn-size-default {
+  box-shadow: $shadow-btn;
+}
+
+.arco-btn-primary:not(.arco-btn-disabled), .arco-checkbox-checked .arco-checkbox-mask {
+  background-color: $theme;
+}
+
+.arco-tooltip-content-inner {
+  color: #fff !important;
 }

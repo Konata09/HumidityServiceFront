@@ -11,9 +11,9 @@ export const DashboardPage = () => {
   const Option = Select.Option;
   const [nodes, setNodes] = useState<NodeT[]>([]);
   const [selectedNode, setSelectedNode] = useState<object[]>([]);
-  const [startTime, setStartTime] = useState<string>(dayjs().subtract(30, 'm').toISOString());
-  const [endTime, setEndTime] = useState<string>(dayjs().toISOString());
-
+  const [data, setData] = useState<object[]>([])
+  const [startTime, setStartTime] = useState<dayjs.Dayjs>(dayjs().subtract(30, 'm'));
+  const [endTime, setEndTime] = useState<dayjs.Dayjs>(dayjs());
   const {pipeline, setPipeline} = useContext(PipeContext);
   useEffect(() => {
     if (pipeline.pipeId) {
@@ -29,23 +29,49 @@ export const DashboardPage = () => {
   }, [pipeline.pipeId])
 
 
-  const getNodeHistory = async (nodeId: string) => {
-    return await Api.getNodeHistory(nodeId, startTime, endTime, '10m');
+  const getNodeHistory = async (nodeId: string, startTime: string, endTime: string, every: string) => {
+    return await Api.getNodeHistory(nodeId, startTime, endTime, every);
   }
 
-  const [data, setData] = useState<object[]>([])
 
   const getSelectedHistory = async () => {
+    let every: string;
+    const interval = endTime.diff(startTime, 'h');
+    if (interval < 1) {
+      every = '';
+    } else if (interval < 3) {
+      every = '5m'
+    } else if (interval < 6) {
+      every = '10m'
+    } else if (interval < 12) {
+      every = '20m'
+    } else if (interval < 24) {
+      every = '40m'
+    } else if (interval < 72) {
+      every = '3h'
+    } else if (interval < 168) {
+      every = '7h'
+    } else if (interval < 360) {
+      every = '15h'
+    } else if (interval < 720) {
+      every = '1d'
+    } else if (interval < 2160) {
+      every = '3d'
+    } else if (interval < 4320) {
+      every = '6d'
+    } else {
+      every = '15d'
+    }
     let lData: object[] = [];
     const c: string[] = [];
     for (let i = 1; i <= 30; i++) {
       c.push("node" + i);
     }
-    await Promise.all(nodes.map(async (n: any) => {
+    await Promise.all(selectedNode.map(async (n: any) => {
       if (c.indexOf(n.tag) < 0) {
         return
       }
-      let r2 = await getNodeHistory(n.id);
+      let r2 = await getNodeHistory(n.id, startTime.toISOString(), endTime.toISOString(), every);
       let points = r2.data.points;
       for (const point of points) {
         let time = new Date(point.pointTime);
@@ -59,9 +85,6 @@ export const DashboardPage = () => {
   }
 
   const handleQuery = () => {
-    console.log(startTime)
-    console.log(endTime)
-    console.log(selectedNode)
     getSelectedHistory()
   }
 
@@ -84,13 +107,10 @@ export const DashboardPage = () => {
             onSelectShortcut={(s) => {
               const t = s.value.call(this)
               if (!Array.isArray(t)) {
-                setStartTime(t.toISOString())
+                setStartTime(t)
               }
             }}
-            onOk={(_, t) => {
-              console.log(t)
-              setStartTime(t.toISOString())
-            }}
+            onOk={(_, t) => setStartTime(t)}
             shortcutsPlacementLeft={true}
             shortcuts={[
               {
@@ -136,9 +156,7 @@ export const DashboardPage = () => {
             className={"datetime-picker"}
             defaultValue={dayjs()}
             showTime={true}
-            onOk={(_, t) => {
-              setEndTime(t.toISOString())
-            }}
+            onOk={(_, t) => setEndTime(t)}
             format='YYYY-MM-DD HH:mm'
           />
 
