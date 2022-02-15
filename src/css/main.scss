@@ -118,6 +118,9 @@ header:not(.arco-panel-date-timepicker-title) {
 
 // Mobile
 @media (max-width: $small-width) {
+  .header-icons {
+    display: none;
+  }
   #menu-wrapper {
     top: 3.5rem;
     position: fixed;
@@ -164,11 +167,11 @@ header:not(.arco-panel-date-timepicker-title) {
     }
   }
   .main-layout {
-    padding-top: 5.5rem;
+    padding-top: 6rem;
   }
   #realtime-history-canvas, #query-history-canvas {
     width: calc(100vw - 4.5rem);
-    height: 40vh;
+    height: 60vh;
   }
 }
 
@@ -250,7 +253,7 @@ header:not(.arco-panel-date-timepicker-title) {
   }
   #realtime-history-canvas, #query-history-canvas {
     width: calc(100vw - 21.5rem);
-    height: 40vh;
+    height: 50vh;
     flex-grow: 0;
   }
 }
@@ -296,13 +299,16 @@ header:not(.arco-panel-date-timepicker-title) {
 }
 
 .history-query-container {
-  padding: 1rem 2rem 1.5rem 2rem;
+  padding: 1rem 1rem 1.5rem 1rem;
   align-items: center;
   flex-wrap: wrap;
   justify-content: space-between;
 
   .history-query-item {
     margin: 0.5rem auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .arco-btn {
@@ -326,3 +332,17 @@ header:not(.arco-panel-date-timepicker-title) {
 .arco-tooltip-content-inner {
   color: #fff !important;
 }
+
+.col-id > .arco-table-cell > span {
+  font-family: Consolas, monospace;
+  font-size: 0.8rem;
+  background-color: $active-bg;
+  border-radius: 6px;
+  border-style: solid;
+  padding: 0.15rem 0.4rem;
+}
+
+.col-center > .arco-table-cell {
+  text-align: center;
+}
+

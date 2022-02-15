@@ -213,7 +213,6 @@ export const QueryHistory = (props: any) => {
           </Button>
         </div>
 
-
       </div>
       <div id="query-history-canvas">
         <Line data={data} smooth={true} theme="my-theme"
