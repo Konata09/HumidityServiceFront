@@ -31,7 +31,7 @@ export const NodePage = () => {
     {
       title: 'ID',
       dataIndex: 'id',
-      className: "col-id"
+      className: "col-id col-center",
     }, {
       title: '标签',
       dataIndex: 'tag',
@@ -61,11 +61,12 @@ export const NodePage = () => {
     }, {
       title: '最新数据时间',
       dataIndex: 'lastTime',
+      className: "col-center",
       render: (t: string) => dayjs(t).format("YYYY-MM-DD HH:mm:ss")
     }, {
       title: '管道',
       dataIndex: 'pipeline',
-      className: "col-id"
+      className: "col-id col-center"
     }
   ];
 
