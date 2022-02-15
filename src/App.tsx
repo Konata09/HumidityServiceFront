@@ -1,6 +1,7 @@
 import {useEffect, useMemo, useState} from 'react';
 import "@arco-design/web-react/dist/css/arco.css";
-import './css/main.scss'
+import './css/main.scss';
+import './font_3182906_rox2tj0doc/iconfont.css';
 import {Api} from "./utils/api";
 import {SStorage} from "./utils/util";
 import {BrowserRouter, NavLink, Route, Routes} from "react-router-dom";
@@ -30,10 +31,25 @@ export interface NodeT {
 
 function App() {
   const [username, setUsername] = useState('Konata');
-  const value = useMemo(() => ({username, setUsername}), [username]);
-
   const [pipeline, setPipeline] = useState({pipeId: "", pipeName: ""});
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const value = useMemo(() => ({username, setUsername}), [username]);
   const pipeMemo = useMemo(() => ({pipeline, setPipeline}), [pipeline]);
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen((s) => !s);
+  }
+
+  const getLinkClass = ({isActive}: any): string => {
+    let cl = "";
+    if (mobileMenuOpen) {
+      cl = cl.concat(" mobile-show");
+    }
+    if (isActive) {
+      cl = cl.concat(" active");
+    }
+    return cl;
+  }
 
   useEffect(() => {
     setPipeline({...pipeline, pipeId: "dc11b463242f4cb187bf2db8ded2a0c1", pipeName: "管道1"})
@@ -68,24 +84,26 @@ function App() {
             </div>
           </div>
         </header>
-        <div className="flex-row main-layout">
+        <div className="main-layout">
           <div id="menu-wrapper">
             <div id="menu">
               <ul>
                 <li>
-                  <NavLink to="/" className={({isActive}) => isActive ? "active" : ""}>仪表板</NavLink>
+                  <NavLink to="/" className={getLinkClass} onClick={() => setMobileMenuOpen(false)}>仪表板</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/problem" id="menu-problem"
-                           className={({isActive}) => isActive ? "active" : ""}>问题</NavLink>
+                  <NavLink to="/problem" id="menu-problem" className={getLinkClass}
+                           onClick={() => setMobileMenuOpen(false)}>问题</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/node" className={({isActive}) => isActive ? "active" : ""}>节点</NavLink>
+                  <NavLink to="/node" className={getLinkClass} onClick={() => setMobileMenuOpen(false)}>节点</NavLink>
                 </li>
                 <li className="menu-setting">
-                  <NavLink to="/settings" className={({isActive}) => isActive ? "active" : ""}>设置</NavLink>
+                  <NavLink to="/settings" className={getLinkClass} onClick={() => setMobileMenuOpen(false)}>设置</NavLink>
                 </li>
               </ul>
+              <span className={mobileMenuOpen ? "iconfont icon-arrow-up-bold" : "iconfont icon-arrow-down-bold"}
+                    onClick={toggleMobileMenu}/>
             </div>
           </div>
           <Routes>

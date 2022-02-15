@@ -20,7 +20,7 @@
   --olay: hsla(0, 0%, 100%, 0.9);
 }
 
-
+$small-width: 960px;
 $theme: rgb(67, 128, 255);
 $hover-bg: #efefef;
 $active-bg: rgba(57, 146, 255, .125);
@@ -90,7 +90,7 @@ header:not(.arco-panel-date-timepicker-title) {
   z-index: 5;
   position: fixed;
   width: 100vw;
-  min-height: 3.5rem;
+  height: 3.5rem;
 
   #nav {
     align-items: stretch;
@@ -116,77 +116,149 @@ header:not(.arco-panel-date-timepicker-title) {
   align-self: center;
 }
 
-.main-layout {
-  padding-top: 3rem;
+// Mobile
+@media (max-width: $small-width) {
+  #menu-wrapper {
+    top: 3.5rem;
+    position: fixed;
+    z-index: 4;
+    transition: height 0.2s ease;
+  }
+
+  #menu {
+    background-color: $main;
+    width: 100vw;
+    box-shadow: 0 10px 10px rgba(0, 2, 4, .06), 0 1px 1px rgba(0, 2, 4, .11);
+    padding: 0.5rem;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+
+    .iconfont {
+      font-size: 1.3rem;
+      padding-left: 0.6rem;
+      cursor: pointer;
+    }
+
+
+    ul {
+      li {
+        text-align: center;
+        margin: 0.4rem 0;
+
+        a {
+          font-size: 1.3rem;
+          display: none;
+
+          &.active {
+            color: $link;
+            display: inline;
+          }
+
+          &.mobile-show {
+            display: inline;
+          }
+        }
+      }
+    }
+  }
+  .main-layout {
+    padding-top: 5.5rem;
+  }
+  #realtime-history-canvas, #query-history-canvas {
+    width: calc(100vw - 4.5rem);
+    height: 40vh;
+  }
 }
 
-#menu-wrapper {
-  width: 15rem;
-  position: relative;
-}
+// Desktop
+@media (min-width: $small-width) {
+  .main-layout {
+    padding-top: 3rem;
+    display: flex;
+    flex-direction: row;
+  }
 
-#menu {
-  background-color: $main;
-  position: fixed;
-  top: 3rem;
-  width: 15rem;
-  height: 100vh;
-  box-shadow: 0 10px 10px rgba(0, 2, 4, .06), 0 1px 1px rgba(0, 2, 4, .11);
-  padding-top: 1.5rem;
-  z-index: 3;
-  flex-shrink: 0;
+  #menu-wrapper {
+    width: 15rem;
+    position: relative;
+    flex-shrink: 0;
+  }
 
-  ul {
-    li {
-      margin: 1rem 1.2rem;
+  #menu {
+    background-color: $main;
+    position: fixed;
+    top: 3rem;
+    width: 15rem;
+    height: 100vh;
+    box-shadow: 0 10px 10px rgba(0, 2, 4, .06), 0 1px 1px rgba(0, 2, 4, .11);
+    padding-top: 1.5rem;
+    //z-index: 3;
+    flex-shrink: 0;
 
-      a {
-        padding: 0.5rem 1.2rem;
-        display: block;
-        font-size: 1.1rem;
-        border-radius: $radius;
+    ul {
+      li {
+        margin: 1rem 1.2rem;
 
-        &:hover {
-          background-color: $hover-bg;
+        a {
+          padding: 0.5rem 1.2rem;
+          display: block;
+          font-size: 1.1rem;
+          border-radius: $radius;
+
+          &:hover {
+            background-color: $hover-bg;
+          }
+        }
+
+        a.active {
+          color: $link;
+          background-color: $active-bg;
+        }
+
+        #menu-problem:after {
+          margin: 0 0.4rem 0 0.4rem;
+          content: '0';
+          font-size: 1rem;
+          font-weight: bold;
+          line-height: 1.1rem;
+          //background-color: rgb(241, 64, 60);
+          background-color: $theme;
+          padding-left: 0.5rem;
+          padding-right: 0.5rem;
+          color: #fff;
+          text-align: center;
+          display: inline-block;
+          border-radius: 2rem;
+          border: 1px solid rgba(0, 0, 0, 0);
         }
       }
 
-      a.active {
-        color: $link;
-        background-color: $active-bg;
-      }
-
-      #menu-problem:after {
-        margin: 0 0.4rem 0 0.4rem;
-        content: '0';
-        font-size: 1rem;
-        font-weight: bold;
-        line-height: 1.1rem;
-        //background-color: rgb(241, 64, 60);
-        background-color: $theme;
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-        color: #fff;
-        text-align: center;
-        display: inline-block;
-        border-radius: 2rem;
-        border: 1px solid rgba(0, 0, 0, 0);
+      .menu-setting:before {
+        content: '';
+        width: auto;
+        display: block;
+        margin: 0 0.2rem 1rem 0.2rem;
+        border-top: 1px solid $border;
       }
     }
 
-    .menu-setting:before {
-      content: '';
-      width: auto;
-      display: block;
-      margin: 0 0.2rem 1rem 0.2rem;
-      border-top: 1px solid $border;
+    .icon-arrow-up-bold, .icon-arrow-down-bold {
+      display: none;
     }
+  }
+  #realtime-history-canvas, #query-history-canvas {
+    width: calc(100vw - 21.5rem);
+    height: 40vh;
+    flex-grow: 0;
   }
 }
 
 .dashboard {
-  padding: 1.5rem;
+  padding: 1.5rem 2.5rem;
   margin: 0 auto;
+  overflow: hidden;
 }
 
 .node-page {
@@ -196,10 +268,6 @@ header:not(.arco-panel-date-timepicker-title) {
   background-color: $main;
 }
 
-#realtime-history-canvas, #query-history-canvas {
-  width: calc(100vw - 22rem);
-  height: 40vh;
-}
 
 .card {
   border-radius: $radius;
@@ -207,7 +275,7 @@ header:not(.arco-panel-date-timepicker-title) {
   background-color: $main;
   box-shadow: $shadow;
   padding: 0.6rem;
-  margin: 1rem auto;
+  margin: 1rem 0;
 }
 
 .card-label {
@@ -230,6 +298,12 @@ header:not(.arco-panel-date-timepicker-title) {
 .history-query-container {
   padding: 1rem 2rem 1.5rem 2rem;
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .history-query-item {
+    margin: 0.5rem auto;
+  }
 
   .arco-btn {
     margin: auto 1rem;
