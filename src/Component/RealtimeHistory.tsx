@@ -1,12 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Api} from "../utils/api";
 import dayjs from "dayjs";
-import {Chart, Line, Tooltip} from "bizcharts";
-
-interface PointData {
-  pointValue: number;
-  pointTime: string;
-}
+import {Line} from "@ant-design/charts";
 
 export const RealtimeHistory = (props: any) => {
   let pipeId: string;
@@ -45,112 +40,59 @@ export const RealtimeHistory = (props: any) => {
       }
     }))
     setData(lData)
-    // updateData();
-  }
-
-  function renderChart() {
-    // @ts-ignore
-    option = {
-      title: {
-        show: false
-      }, legend: {
-        data: [],
-      }, tooltip: {
-        trigger: 'axis',
-        renderMode: 'richText',
-        confine: true,
-        appendToBody: true, // position: function (pos, params, el, elRect, size) {
-
-        // var obj = {};
-        // // @ts-ignore
-        // obj[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 50;
-        // // @ts-ignore
-        // obj[['top', 'bottom'][+(pos[1] < size.viewSize[1] / 2)]] = 50;
-        // console.log(obj)
-        // return pos;
-        // },
-        order: 'seriesDesc', // formatter: function (params: any) {
-        //   params = params[0];
-        //   // var date = new Date(params.name);
-        //   return (
-        //     `${dayjsToString(params.value[0])}\n${params.value[1]}`
-        //   );
-        // },
-        // textStyle: {
-        //   fontWeight: 'bold',
-        // },
-        // axisPointer: {
-        //   snap: true,
-        //   type: 'cross',
-        //   label: {
-        //     precision: 0
-        //   }
-        // },
-      }, xAxis: {
-        type: 'time', splitLine: {
-          show: false
-        }
-      }, yAxis: {
-        type: 'value',
-        min: (v: { min: number; }) => v.min - 50 >= 0 ? Math.round(v.min - 50) : 0,
-        max: (v: { max: number; }) => v.max + 50,
-        boundaryGap: [0, '100%'],
-        splitLine: {
-          show: false
-        }
-      }, dataZoom: [// {
-        //   id: 'dataZoomX',
-        //   type: 'slider',
-        //   filterMode: 'empty'
-        // }
-      ], series: []
-    };
   }
 
   useEffect(() => {
     getPipeHistory();
   }, []);
-  // useEffect(() => {
-  //   getPipeHistory().then((r) => {
-  //     let data: DataItem[] = [];
-  //     for (const nodePoint of nodePoints) {
-  //       let time = new Date(nodePoint.pointTime);
-  //       data.push({
-  //         name: "nodePoint.pointTime",
-  //         value: [
-  //           time.toISOString(),
-  //           nodePoint.pointValue
-  //         ]
-  //       })
-  //     }
-  //     // console.log(data)
-  //     setSeriesData(data);
-  //   })
-  // }, [])
 
-  const scale = {
-    time: {
-      type: "time", mask: "YYYY-MM-DD HH:mm:ss"
-    },
-  }
-  return (<div id="realtime-history-canvas">
-    <Chart autoFit data={data} scale={scale} appendPadding={20} theme={'my-theme'}>
-      <Tooltip shared={true} showCrosshairs={true} showMarkers={true} offset={50} marker={{
-        shadowColor: 'rgba(0,0,0,0.15)',
-        shadowBlur: 2
-      }}
-               domStyles={{
-                 "g2-tooltip": {
-                   "border-radius": "0.5rem",
-                   "box-shadow": "0 4px 15px rgba(0, 2, 4, .1), 0 0 3px rgba(0, 2, 4, .18)",
-                   opacity: 1
-                 },
-                 "g2-tooltip-list": {fontSize: "1rem"},
-                 "g2-tooltip-title": {fontSize: "1rem"},
-                 "g2-tooltip-value": {fontWeight: 'bold'}
-               }}/>
-      <Line position="time*value" color="tag" shape="smooth"
-            style={{opacity: 1, shadowColor: 'rgba(255,255,255,0)', shadowBlur: 0}}/>
-    </Chart>
-  </div>)
+  return (
+    <div id="realtime-history-canvas">
+      <Line data={data} smooth={true} theme="my-theme"
+            padding="auto" appendPadding={20} xField="time" yField="value" seriesField="tag"
+            lineStyle={{opacity: 1, shadowColor: 'rgba(255,255,255,0)', shadowBlur: 0}} autoFit={true}
+            legend={{position: "bottom"}}
+            meta={{
+              time: {
+                type: "time",
+                mask: "YYYY-MM-DD HH:mm:ss",
+                nice: true,
+                maxTickCount: 30,
+                tickMethod: ({min, max, tickCount}) => {
+                  const avg = (max - min) / tickCount;
+                  const ticks = [];
+                  for (let i = min; i <= max; i += avg) {
+                    ticks.push(i);
+                  }
+                  return ticks;
+                }
+              }
+            }}
+            tooltip={{
+              shared: true, showCrosshairs: true, showMarkers: true, offset: 50, showNil: true,
+              marker: {
+                shadowColor: 'rgba(0,0,0,0.15)',
+                shadowBlur: 2
+              },
+              domStyles: {
+                "g2-tooltip": {
+                  "border-radius": "0.5rem",
+                  "box-shadow": "0 4px 15px rgba(0, 2, 4, .1), 0 0 3px rgba(0, 2, 4, .18)",
+                  opacity: 1
+                },
+                "g2-tooltip-list": {fontSize: "1rem"},
+                "g2-tooltip-title": {fontSize: "1rem"},
+                "g2-tooltip-value": {fontWeight: 'bold'}
+              }
+            }}
+            xAxis={{
+              label: {
+                formatter(text) {
+                  return text.slice(0, 16)
+                }
+              }
+            }}
+      />
+    </div>
+  )
 }

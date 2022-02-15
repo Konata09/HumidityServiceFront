@@ -83,7 +83,7 @@ body {
 }
 
 
-header {
+header:not(.arco-panel-date-timepicker-title) {
   background-color: $main;
   box-shadow: $shadow;
   padding: 0 2rem;
@@ -196,7 +196,7 @@ header {
   background-color: $main;
 }
 
-#realtime-history-canvas {
+#realtime-history-canvas, #query-history-canvas {
   width: calc(100vw - 22rem);
   height: 40vh;
 }

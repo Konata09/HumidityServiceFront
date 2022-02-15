@@ -9,7 +9,9 @@ import {SettingsPage} from "./Component/Settings";
 import {ProblemPage} from "./Component/Problem";
 import {NodePage} from "./Component/Node";
 import {PipeContext} from './Context';
-import {registerTheme} from "bizcharts";
+import {G2} from "@ant-design/charts";
+
+const {registerTheme} = G2;
 
 registerTheme('default', {
   defaultColor: '#505050',

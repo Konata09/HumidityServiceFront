@@ -42,25 +42,25 @@ export const DashboardPage = () => {
     } else if (interval < 3) {
       every = '5m'
     } else if (interval < 6) {
-      every = '10m'
+      every = '8m'
     } else if (interval < 12) {
-      every = '20m'
+      every = '15m'
     } else if (interval < 24) {
-      every = '40m'
+      every = '30m'
     } else if (interval < 72) {
-      every = '3h'
+      every = '2h'
     } else if (interval < 168) {
-      every = '7h'
+      every = '4h'
     } else if (interval < 360) {
-      every = '15h'
+      every = '10h'
     } else if (interval < 720) {
-      every = '1d'
+      every = '20h'
     } else if (interval < 2160) {
-      every = '3d'
+      every = '1d'
     } else if (interval < 4320) {
-      every = '6d'
+      every = '2d'
     } else {
-      every = '15d'
+      every = '10d'
     }
     let lData: object[] = [];
     const c: string[] = [];
