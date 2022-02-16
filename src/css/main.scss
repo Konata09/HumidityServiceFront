@@ -103,6 +103,13 @@ header:not(.arco-panel-date-timepicker-title) {
 
   .header-title {
     font-size: 1.5rem;
+    overflow: hidden;
+    white-space: nowrap;
+
+    span {
+      width: 100%;
+      text-overflow: ellipsis;
+    }
   }
 }
 
@@ -114,6 +121,12 @@ header:not(.arco-panel-date-timepicker-title) {
 
 .header-right {
   align-self: center;
+
+  .header-icons > .iconfont {
+    color: #4f637f;
+    font-size: 1.6rem;
+    margin: 0 0.6rem
+  }
 }
 
 // Mobile
@@ -140,6 +153,15 @@ header:not(.arco-panel-date-timepicker-title) {
 
     .iconfont {
       font-size: 1.3rem;
+      padding-right: 0.5rem;
+
+      &.icon-settings {
+        font-size: 1.25rem;
+      }
+    }
+
+    .icon-arrow-down-bold, .icon-arrow-up-bold {
+      font-size: 1.3rem;
       padding-left: 0.6rem;
       cursor: pointer;
     }
@@ -148,19 +170,19 @@ header:not(.arco-panel-date-timepicker-title) {
     ul {
       li {
         text-align: center;
-        margin: 0.4rem 0;
 
         a {
+          margin: 0.4rem 0;
           font-size: 1.3rem;
-          display: none;
+          display: none;¬
 
           &.active {
             color: $link;
-            display: inline;
+            display: inline-block;
           }
 
           &.mobile-show {
-            display: inline;
+            display: inline-block;
           }
         }
       }
@@ -202,13 +224,24 @@ header:not(.arco-panel-date-timepicker-title) {
 
     ul {
       li {
-        margin: 1rem 1.2rem;
+        margin: 0.8rem 1.2rem;
 
         a {
-          padding: 0.5rem 1.2rem;
-          display: block;
+          height: 2.6rem;
+          padding: 0.2rem 1.2rem;
+          display: flex;
           font-size: 1.1rem;
           border-radius: $radius;
+          align-items: center;
+
+          .iconfont {
+            padding-right: 0.5rem;
+            font-size: 1.5rem;
+
+            &.icon-settings {
+              font-size: 1.35rem;
+            }
+          }
 
           &:hover {
             background-color: $hover-bg;

@@ -49,21 +49,21 @@ export const QueryHistory = (props: any) => {
     if (interval < 1) {
       every = '';
     } else if (interval < 3) {
-      every = '5m'
+      every = '3m'
     } else if (interval < 6) {
-      every = '8m'
+      every = '6m'
     } else if (interval < 12) {
-      every = '15m'
+      every = '12m'
     } else if (interval < 24) {
       every = '30m'
     } else if (interval < 72) {
-      every = '2h'
+      every = '90m'
     } else if (interval < 168) {
-      every = '4h'
+      every = '2h'
     } else if (interval < 360) {
-      every = '10h'
+      every = '5h'
     } else if (interval < 720) {
-      every = '20h'
+      every = '10h'
     } else if (interval < 2160) {
       every = '1d'
     } else if (interval < 4320) {

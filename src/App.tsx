@@ -1,7 +1,7 @@
 import {useEffect, useMemo, useState} from 'react';
 import "@arco-design/web-react/dist/css/arco.css";
 import './css/main.scss';
-import './font_3182906_rox2tj0doc/iconfont.css';
+import './css/iconfont.css';
 import {Api} from "./utils/api";
 import {SStorage} from "./utils/util";
 import {BrowserRouter, NavLink, Route, Routes} from "react-router-dom";
@@ -78,8 +78,8 @@ function App() {
             </div>
             <div className="header-right">
               <div className="header-icons">
-                <span>Theme </span>
-                <span>User</span>
+                <span className="iconfont icon-dark_mode_black_24dp"/>
+                <span className="iconfont icon-user"/>
               </div>
             </div>
           </div>
@@ -89,17 +89,21 @@ function App() {
             <div id="menu">
               <ul>
                 <li>
-                  <NavLink to="/" className={getLinkClass} onClick={() => setMobileMenuOpen(false)}>仪表板</NavLink>
+                  <NavLink to="/" className={getLinkClass} onClick={() => setMobileMenuOpen(false)}>
+                    <span className="iconfont icon-dashboard"/>仪表板</NavLink>
                 </li>
                 <li>
                   <NavLink to="/problem" id="menu-problem" className={getLinkClass}
-                           onClick={() => setMobileMenuOpen(false)}>问题</NavLink>
+                           onClick={() => setMobileMenuOpen(false)}>
+                    <span className="iconfont icon-alert"/>问题</NavLink>
                 </li>
                 <li>
-                  <NavLink to="/node" className={getLinkClass} onClick={() => setMobileMenuOpen(false)}>节点</NavLink>
+                  <NavLink to="/node" className={getLinkClass} onClick={() => setMobileMenuOpen(false)}>
+                    <span className="iconfont icon-node"/>节点</NavLink>
                 </li>
                 <li className="menu-setting">
-                  <NavLink to="/settings" className={getLinkClass} onClick={() => setMobileMenuOpen(false)}>设置</NavLink>
+                  <NavLink to="/settings" className={getLinkClass} onClick={() => setMobileMenuOpen(false)}>
+                    <span className="iconfont icon-settings"/>设置</NavLink>
                 </li>
               </ul>
               <span className={mobileMenuOpen ? "iconfont icon-arrow-up-bold" : "iconfont icon-arrow-down-bold"}
