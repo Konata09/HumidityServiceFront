@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Line} from "@ant-design/charts";
+import {Line} from "@ant-design/plots";
 import {Button, DatePicker, Select, Tag} from "@arco-design/web-react";
 import dayjs from "dayjs";
 import {Api} from "../utils/api";

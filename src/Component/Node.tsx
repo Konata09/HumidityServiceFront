@@ -27,7 +27,7 @@ export const NodePage = () => {
   //   }, 2000);
   // }, []);
 
-  const columns = [
+  const cols = [
     {
       title: 'ID',
       dataIndex: 'id',
@@ -43,6 +43,7 @@ export const NodePage = () => {
         const m2 = t2.match(numReg);
         return m1[1] - m2[1];
       },
+      defaultSortOrder: 'ascend' as 'ascend',
     }, {
       title: '偏移',
       dataIndex: 'bias',
@@ -73,7 +74,7 @@ export const NodePage = () => {
   return (
     <div className="flex-col node-page flex-center">
       <div className="page-title">节点列表</div>
-      <Table columns={columns} data={nodes} pagination={{sizeCanChange: true}} loading={loading}/>
+      <Table data={nodes} columns={cols} pagination={{sizeCanChange: true, defaultPageSize: 30}} loading={loading}/>
     </div>
   )
 }

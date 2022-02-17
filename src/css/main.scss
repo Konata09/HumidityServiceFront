@@ -42,7 +42,7 @@ $radius: 0.5rem;
   box-sizing: border-box;
 }
 
-*:not(.iconfont,.arco-btn>span,.arco-checkbox-mask-icon,.arco-checkbox-mask-icon>path) {
+*:not(.iconfont,.arco-btn>span,.arco-checkbox-mask-icon,path,.arco-icon-loading,.arco-spin-icon) {
   color: $text;
 }
 

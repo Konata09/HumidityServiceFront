@@ -10,7 +10,7 @@ import {SettingsPage} from "./Component/Settings";
 import {ProblemPage} from "./Component/Problem";
 import {NodePage} from "./Component/Node";
 import {PipeContext} from './Context';
-import {G2} from "@ant-design/charts";
+import {G2} from "@ant-design/plots";
 
 const {registerTheme} = G2;
 

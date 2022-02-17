@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Api} from "../utils/api";
 import dayjs from "dayjs";
-import {Line} from "@ant-design/charts";
+import {Line} from "@ant-design/plots";
 
 export const RealtimeHistory = (props: any) => {
   let pipeId: string;
