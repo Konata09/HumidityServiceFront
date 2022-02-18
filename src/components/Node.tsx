@@ -4,7 +4,6 @@ import {PipeContext} from "../Context";
 import {Api} from "../utils/api";
 import dayjs from "dayjs";
 
-
 export const NodePage = () => {
   const {pipeline, setPipeline} = useContext(PipeContext);
   const [nodes, setNodes] = useState<object[]>([]);
@@ -18,7 +17,6 @@ export const NodePage = () => {
       })
     }
   }, [pipeline.pipeId])
-
 
   // useEffect(() => {
   //   console.log(pipeline)

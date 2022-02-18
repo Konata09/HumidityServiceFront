@@ -4,7 +4,7 @@ import {Button, DatePicker, Select, Tag} from "@arco-design/web-react";
 import dayjs from "dayjs";
 import {Api} from "../utils/api";
 import {PipeContext} from "../Context";
-import {NodeT} from "../App";
+import {NodeT} from "../Types";
 
 export const QueryHistory = (props: any) => {
   const Option = Select.Option;

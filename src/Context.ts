@@ -1,20 +1,23 @@
-import {createContext} from "react";
+import {createContext, Dispatch, SetStateAction} from "react";
+import {PipelineT, UserT} from "./Types";
 
-interface LooseObject {
-  [key: string]: any;
+interface PipeContextType {
+  pipeline: PipelineT,
+  setPipeline: Dispatch<SetStateAction<PipelineT>>;
 }
 
-const userContext: LooseObject = {
-  get: {},
-  set: () => {
-  }
+interface UserContextType {
+  user: UserT,
+  setUser: Dispatch<SetStateAction<UserT>>
 }
 
-const pipeContext: LooseObject = {
-  get: {},
-  set: () => {
-  }
+export const UserContext = createContext<UserContextType>(null!);
+export const PipeContext = createContext<PipeContextType>(null!);
+
+interface AuthContextType {
+  user: any;
+  signin: (user: string, callback: VoidFunction) => void;
+  signout: (callback: VoidFunction) => void;
 }
 
-export const UserContext = createContext(userContext);
-export const PipeContext = createContext(pipeContext);
+export const AuthContext = createContext<AuthContextType>(null!);
