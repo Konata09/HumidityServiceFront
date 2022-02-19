@@ -18,13 +18,6 @@ export const NodePage = () => {
     }
   }, [pipeline.pipeId])
 
-  // useEffect(() => {
-  //   console.log(pipeline)
-  //   setTimeout(() => {
-  //     setPipeline((pipeline: any) => ({...pipeline, pipeName: "32fff"}));
-  //   }, 2000);
-  // }, []);
-
   const cols = [
     {
       title: 'ID',

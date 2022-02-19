@@ -203,7 +203,7 @@ header:not(.arco-panel-date-timepicker-title) {
     flex-shrink: 0;
     display: flex;
     justify-content: center;
-    align-items: baseline;
+    align-items: center;
 
     .iconfont {
       font-size: 1.3rem;
@@ -219,7 +219,6 @@ header:not(.arco-panel-date-timepicker-title) {
       padding-left: 0.6rem;
       cursor: pointer;
     }
-
 
     ul {
       display: flex;

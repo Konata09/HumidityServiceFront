@@ -82,7 +82,7 @@ export function Home() {
       </header>
       <div className="main-layout">
         <div id="menu-wrapper">
-          <div id="menu">
+          <div id="menu" style={mobileMenuOpen ? {alignItems: "baseline"} : {alignItems: "center"}}>
             <ul>
               <li>
                 <NavLink to="/dashboard" className={getLinkClass} onClick={() => setMobileMenuOpen(false)}>
