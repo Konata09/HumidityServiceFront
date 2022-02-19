@@ -1,3 +1,5 @@
+import {JWTPayload} from "jose/dist/types/types";
+
 export interface LooseObject {
   [key: string]: any;
 }
@@ -23,12 +25,21 @@ export interface UserT {
   roleName?: string,
   isAdmin?: boolean,
   isStaff?: boolean,
-  isLogin: boolean,
-  jwt?: string
+  loggedIn: boolean,
+  jwt?: string,
+  exp?: number
 }
 
 export interface LocationStateT {
   from?: {
     pathname: string
   },
+}
+
+export interface JwtClaimT extends JWTPayload {
+  isadmin?: boolean,
+  isstaff?: boolean,
+  rolename?: string,
+  uid?: string,
+  username?: string
 }

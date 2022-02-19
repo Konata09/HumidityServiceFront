@@ -21,17 +21,9 @@ G2.registerTheme('default', {
 })
 
 export default function App() {
-  const [user, setUser] = useState<UserT>({isLogin: false, username: "未登录"});
+  const [user, setUser] = useState<UserT>({loggedIn: false, username: "未登录"});
   const userMemo = useMemo(() => ({user, setUser}), [user]);
 
-  useEffect(() => {
-    Api.login("admin", "admin").then(r => {
-      if (r.retcode === 0) {
-        SStorage.set("token", r.data.token);
-      }
-    })
-  }, []);
-  
   useEffect(() => console.log(user), [user])
 
   return (

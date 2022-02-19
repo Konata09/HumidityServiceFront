@@ -1,16 +1,17 @@
-import {useEffect, useMemo, useState} from 'react';
+import {useContext, useEffect, useMemo, useState} from 'react';
 import "@arco-design/web-react/dist/css/arco.css";
 import '../css/main.scss';
 import '../css/iconfont.css';
 import {NavLink, Outlet} from "react-router-dom";
 import {Api} from "../utils/api";
-import {PipeContext} from '../Context';
+import {PipeContext, UserContext} from '../Context';
 import {SStorage} from "../utils/util";
 
 export function Home() {
   const [pipeline, setPipeline] = useState({pipeId: "", pipeName: ""});
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pipeMemo = useMemo(() => ({pipeline, setPipeline}), [pipeline]);
+  const {user, setUser} = useContext(UserContext);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen((s) => !s);
@@ -40,6 +41,11 @@ export function Home() {
         userDropdownTimer = setTimeout(() => (el.style.display = 'none'), timeout);
       }
     }
+  }
+
+  const logout = () => {
+    SStorage.remove("token");
+    setUser({username: "未登录", loggedIn: false});
   }
 
   useEffect(() => {
@@ -75,8 +81,9 @@ export function Home() {
               <div id="user-dropdown" onMouseEnter={() => showUserDropdown(true, 0)}
                    onMouseLeave={() => showUserDropdown(false, 0)}>
                 <ul>
+                  <span>{user.username}</span>
                   <li>修改密码</li>
-                  <li>注销</li>
+                  <li onClick={logout}>注销</li>
                 </ul>
               </div>
             </div>
