@@ -222,6 +222,9 @@ header:not(.arco-panel-date-timepicker-title) {
 
 
     ul {
+      display: flex;
+      flex-direction: column;
+
       li {
         text-align: center;
 
@@ -239,6 +242,25 @@ header:not(.arco-panel-date-timepicker-title) {
             display: inline-block;
           }
         }
+
+        &.mobile-menu {
+          display: block;
+          font-size: 1.2rem;
+          margin: 0.3rem 0;
+          cursor: pointer;
+        }
+
+        &.mobile-menu-first {
+          margin-top: 0.7rem;
+        }
+      }
+
+      .menu-line {
+        margin-top: 0.2rem;
+        border-top: solid $border 1px;
+        width: 84vw;
+        left: 8vw;
+        position: absolute;
       }
     }
   }
@@ -322,6 +344,10 @@ header:not(.arco-panel-date-timepicker-title) {
           display: inline-block;
           border-radius: 2rem;
           border: 1px solid rgba(0, 0, 0, 0);
+        }
+
+        &.mobile-menu {
+          display: none;
         }
       }
 
@@ -441,6 +467,10 @@ header:not(.arco-panel-date-timepicker-title) {
   height: 100vh;
   justify-content: space-between;
 
+  //@media (max-width: $small-width) {
+  //  height: 100vh ;
+  //}
+
   h1, h2 {
     color: rgba(255, 255, 255, 0.95);
   }
@@ -448,7 +478,7 @@ header:not(.arco-panel-date-timepicker-title) {
   h1 {
     font-size: 2.2rem;
     align-self: flex-start;
-    margin-left: 2rem;
+    margin: 0.6rem 1rem 0.6rem 2rem;
   }
 
   h2 {
@@ -472,6 +502,11 @@ header:not(.arco-panel-date-timepicker-title) {
       &:active {
         background-color: #438eff;
       }
+    }
+
+    .login-form-button-wrapper > div {
+      width: auto;
+      flex: none;
     }
   }
 

@@ -101,6 +101,19 @@ export function Home() {
                 <NavLink to="/settings" className={getLinkClass} onClick={() => setMobileMenuOpen(false)}>
                   <span className="iconfont icon-settings"/>设置</NavLink>
               </li>
+              {mobileMenuOpen ?
+                <>
+                  <div className="mobile-menu">
+                    <div className="menu-line"/>
+                  </div>
+                  <li className="mobile-menu mobile-menu-first">
+                    修改密码
+                  </li>
+                  <li className="mobile-menu" onClick={logout}>
+                    注销
+                  </li>
+                </>
+                : ""}
             </ul>
             <span className={mobileMenuOpen ? "iconfont icon-arrow-up-bold" : "iconfont icon-arrow-down-bold"}
                   onClick={toggleMobileMenu}/>

@@ -69,7 +69,7 @@ export const Login = () => {
         <div>
           <h2>请登录</h2>
           <div className="card login-card flex-col flex-center">
-            <Form style={{width: 280}} requiredSymbol={false} form={form} onSubmit={handleSubmit}>
+            <Form style={{width: 300}} requiredSymbol={false} form={form} onSubmit={handleSubmit}>
               <Form.Item label='用户名' field="username" className="login-form-input"
                          rules={[{required: true, message: '请输入用户名'}]}>
                 <Input/>
@@ -78,7 +78,7 @@ export const Login = () => {
                          rules={[{required: true, message: '清输入密码'}]}>
                 <Input/>
               </Form.Item>
-              <Form.Item wrapperCol={{offset: 10}}>
+              <Form.Item wrapperCol={{offset: 10}} className="login-form-button-wrapper">
                 <Button type='primary' htmlType='submit' className="login-form-button" size="large">登录</Button>
               </Form.Item>
             </Form>
