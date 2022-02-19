@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import "@arco-design/web-react/dist/css/arco.css";
 import './css/main.scss';
 import './css/iconfont.css';
@@ -11,7 +11,9 @@ import {G2} from "@ant-design/plots";
 import {Home} from "./components/Home";
 import {Login, RequireAuth} from "./components/Login";
 import {UserContext} from './Context';
-import {UserT} from './Types';
+import {JwtClaimT, UserT} from './Types';
+import {SStorage} from "./utils/util";
+import {decodeJwt} from "jose";
 
 G2.registerTheme('default', {
   defaultColor: '#505050',
@@ -22,7 +24,23 @@ export default function App() {
   const [user, setUser] = useState<UserT>({loggedIn: false, username: "未登录"});
   const userMemo = useMemo(() => ({user, setUser}), [user]);
 
-  useEffect(() => console.log(user), [user])
+  // 渲染时执行: 检查 Session Storage 中保存的 token
+  useMemo(() => {
+    let jwt = SStorage.get("token");
+    if (jwt) {
+      const claims: JwtClaimT = decodeJwt(jwt)
+      setUser({
+        loggedIn: true,
+        username: claims.username ? claims.username : "User",
+        uid: claims.uid,
+        roleName: claims.rolename,
+        isAdmin: claims.isadmin,
+        isStaff: claims.isstaff,
+        exp: claims.exp,
+        jwt: jwt
+      });
+    }
+  }, [])
 
   return (
     <UserContext.Provider value={userMemo}>
