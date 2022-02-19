@@ -3,7 +3,6 @@ import "@arco-design/web-react/dist/css/arco.css";
 import '../css/main.scss';
 import '../css/iconfont.css';
 import {NavLink, Outlet} from "react-router-dom";
-import {Api} from "../utils/api";
 import {PipeContext, UserContext} from '../Context';
 import {SStorage} from "../utils/util";
 
@@ -51,15 +50,6 @@ export function Home() {
   useEffect(() => {
     setPipeline({...pipeline, pipeId: "dc11b463242f4cb187bf2db8ded2a0c1", pipeName: "管道1"})
   }, [])
-
-
-  useEffect(() => {
-    Api.login("admin", "admin").then(r => {
-      if (r.retcode === 0) {
-        SStorage.set("token", r.data.token);
-      }
-    })
-  }, []);
 
   return (
     <PipeContext.Provider value={pipeMemo}>

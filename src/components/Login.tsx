@@ -1,50 +1,11 @@
 import {Navigate, useLocation, useNavigate} from "react-router-dom";
-import {ReactNode, useContext, useState} from "react";
-import {AuthContext, UserContext} from "../Context";
+import {useContext} from "react";
+import {UserContext} from "../Context";
 import {JwtClaimT, LocationStateT} from "../Types";
 import {Button, Form, Input} from "@arco-design/web-react";
 import {Api} from "../utils/api";
 import {SStorage} from "../utils/util";
 import {decodeJwt} from "jose";
-
-
-const fakeAuthProvider = {
-  isAuthenticated: false,
-  signin(callback: VoidFunction) {
-    fakeAuthProvider.isAuthenticated = true;
-    setTimeout(callback, 100); // fake async
-  },
-  signout(callback: VoidFunction) {
-    fakeAuthProvider.isAuthenticated = false;
-    setTimeout(callback, 100);
-  }
-};
-
-function AuthProvider({children}: { children: ReactNode }) {
-  let [user, setUser] = useState<any>(null);
-
-  let signin = (newUser: string, callback: VoidFunction) => {
-    return fakeAuthProvider.signin(() => {
-      setUser(newUser);
-      callback();
-    });
-  };
-
-  let signout = (callback: VoidFunction) => {
-    return fakeAuthProvider.signout(() => {
-      setUser(null);
-      callback();
-    });
-  };
-
-  let value = {user, signin, signout};
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
-
-// function useAuth() {
-//   return useContext(AuthContext);
-// }
 
 export function RequireAuth({children}: { children: JSX.Element }) {
   const {user} = useContext(UserContext);
@@ -56,11 +17,6 @@ export function RequireAuth({children}: { children: JSX.Element }) {
 
   return children;
 }
-
-const handleLogin = (e: any) => {
-  console.log(e)
-}
-
 
 export const Login = () => {
   let navigate = useNavigate();
@@ -106,7 +62,6 @@ export const Login = () => {
     })
   }
 
-
   return (
     user.loggedIn ? <Navigate to={from} replace={true}/> :
       <div className="flex-center flex-col login-main">
@@ -135,24 +90,3 @@ export const Login = () => {
       </div>
   );
 }
-
-// function App()
-//   return (
-//     <AuthProvider>
-//       <Routes>
-//         <Route element={<Layout/>}>
-//           <Route path="/" element={"<PublicPage/>"}/>
-//           <Route path="/login" element={"<LoginPage/>"}/>
-//           <Route
-//             path="/protected"
-//             element={
-//               <RequireAuth>
-//                 <ProtectedPage/>
-//               </RequireAuth>
-//             }
-//           />
-//         </Route>
-//       </Routes>
-//     </AuthProvider>
-//   );
-// }

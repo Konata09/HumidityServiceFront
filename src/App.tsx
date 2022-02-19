@@ -2,8 +2,6 @@ import React, {useEffect, useMemo, useState} from 'react';
 import "@arco-design/web-react/dist/css/arco.css";
 import './css/main.scss';
 import './css/iconfont.css';
-import {Api} from "./utils/api";
-import {SStorage} from "./utils/util";
 import {Route, Routes} from "react-router-dom";
 import {DashboardPage} from "./components/Dashboard";
 import {SettingsPage} from "./components/Settings";
