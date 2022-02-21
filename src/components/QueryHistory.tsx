@@ -7,33 +7,25 @@ import {PipeContext} from "../Context";
 import {NodeT} from "../Types";
 
 export const QueryHistory = (props: any) => {
-  const Option = Select.Option;
-
-  const [selectedNode, setSelectedNode] = useState<object[]>([]);
+  const [selectedNode, setSelectedNode] = useState<NodeT[]>([]);
   const [startTime, setStartTime] = useState<dayjs.Dayjs>(dayjs().subtract(30, 'm'));
   const [endTime, setEndTime] = useState<dayjs.Dayjs>(dayjs());
   const [data, setData] = useState<object[]>([])
   const [nodes, setNodes] = useState<NodeT[]>([]);
-  const {pipeline, setPipeline} = useContext(PipeContext);
+  const {pipeline} = useContext(PipeContext);
+
   useEffect(() => {
     if (pipeline.pipeId) {
       let nodes_: NodeT[] = [];
       Api.getNodes(pipeline.pipeId, false, false).then((r) => {
         for (const node of r.data.nodes) {
-          nodes_.push({id: node.id, tag: node.tag})
+          nodes_.push({id: node.id, tag: node.tag, bias: node.bias})
         }
         setNodes(nodes_)
         setSelectedNode(nodes_)
       })
     }
   }, [pipeline.pipeId])
-
-
-  const scale = {
-    time: {
-      type: "time", mask: "YYYY-MM-DD HH:mm:ss",
-    },
-  }
 
   const handleQuery = () => {
     getSelectedHistory()
@@ -72,21 +64,14 @@ export const QueryHistory = (props: any) => {
       every = '10d'
     }
     let lData: object[] = [];
-    const c: string[] = [];
-    for (let i = 1; i <= 30; i++) {
-      c.push("node" + i);
-    }
-    await Promise.all(selectedNode.map(async (n: any) => {
-      if (c.indexOf(n.tag) < 0) {
-        return
-      }
-      let r2 = await getNodeHistory(n.id, startTime.toISOString(), endTime.toISOString(), every);
-      let points = r2.data.points;
+    await Promise.all(selectedNode.map(async (n: NodeT) => {
+      const r = await getNodeHistory(n.id, startTime.toISOString(), endTime.toISOString(), every);
+      let points = r.data.points;
       for (const point of points) {
-        let time = new Date(point.pointTime);
-        time.setUTCMilliseconds(0);
         lData.push({
-          tag: n.tag, time: time.toISOString(), value: point.pointValue
+          tag: n.tag,
+          time: point.pointTime,
+          value: point.pointValue + n.bias
         })
       }
     }))
@@ -150,7 +135,6 @@ export const QueryHistory = (props: any) => {
             ]}
           />
         </div>
-
         <div className="history-query-item">
           <span className="picker-label">结束时间</span>
           <DatePicker
@@ -162,7 +146,6 @@ export const QueryHistory = (props: any) => {
             format='YYYY-MM-DD HH:mm'
           />
         </div>
-
         <div className="history-query-item">
           <span className="picker-label">节点</span>
           {nodes.length > 0 ? <Select
@@ -200,9 +183,9 @@ export const QueryHistory = (props: any) => {
             }}
           >
             {nodes.map((node) => (
-              <Option key={node.id} value={node.id}>
+              <Select.Option key={node.id} value={node.id}>
                 {node.tag}
-              </Option>
+              </Select.Option>
             ))}
           </Select> : ""}
         </div>
@@ -212,13 +195,11 @@ export const QueryHistory = (props: any) => {
             查询
           </Button>
         </div>
-
       </div>
       <div id="query-history-canvas">
-        <Line data={data} smooth={true} theme="my-theme"
-              padding="auto" appendPadding={20} xField="time" yField="value" seriesField="tag"
-              lineStyle={{opacity: 1, shadowColor: 'rgba(255,255,255,0)', shadowBlur: 0}} autoFit={true}
-              legend={{position: "bottom"}}
+        <Line data={data} smooth={true} theme="my-theme" padding="auto" appendPadding={20} xField="time" yField="value"
+              seriesField="tag" lineStyle={{opacity: 1, shadowColor: 'rgba(255,255,255,0)', shadowBlur: 0}}
+              autoFit={true} legend={{position: "bottom"}}
               meta={{
                 time: {
                   type: "time",

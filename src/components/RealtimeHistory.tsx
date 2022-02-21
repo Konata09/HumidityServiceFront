@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Api} from "../utils/api";
 import dayjs from "dayjs";
 import {Line} from "@ant-design/plots";
+import {PipeContext} from "../Context";
+import {NodeT} from "../Types";
 
 export const RealtimeHistory = (props: any) => {
-  let pipeId: string;
+  const {pipeline} = useContext(PipeContext);
 
   const getNodeHistory = async (nodeId: string) => {
     let now = dayjs();
@@ -15,27 +17,18 @@ export const RealtimeHistory = (props: any) => {
   const [data, setData] = useState<object[]>([])
 
   const getPipeHistory = async () => {
-    let r = await Api.getPipelines();
-    pipeId = r.data.pipelines[0].id;
-    r = await Api.getNodes(pipeId, true, true);
-    let nodeCount = r.data.count;
-    let nodes = r.data.nodes;
+    const r = await Api.getNodes(pipeline.pipeId, false, false);
+    // let nodeCount = r.data.count;
+    const nodes: NodeT[] = r.data.nodes;
     let lData: object[] = [];
-    const c: string[] = [];
-    for (let i = 1; i <= 30; i++) {
-      c.push("node" + i);
-    }
-    await Promise.all(nodes.map(async (n: any) => {
-      if (c.indexOf(n.tag) < 0) {
-        return
-      }
+    await Promise.all(nodes.map(async (n) => {
       let r2 = await getNodeHistory(n.id);
       let points = r2.data.points;
       for (const point of points) {
-        let time = new Date(point.pointTime);
-        time.setUTCMilliseconds(0);
         lData.push({
-          tag: n.tag, time: time.toISOString(), value: point.pointValue
+          tag: n.tag,
+          time: point.pointTime,
+          value: point.pointValue + n.bias
         })
       }
     }))

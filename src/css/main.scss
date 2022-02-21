@@ -389,6 +389,10 @@ header:not(.arco-panel-date-timepicker-title) {
   width: 100%;
   margin: 0 auto;
   background-color: $main;
+
+  table {
+    //min-width: 41rem;
+  }
 }
 
 

@@ -1,4 +1,4 @@
-import {useContext, useEffect, useMemo, useState} from 'react';
+import {useContext, useMemo, useState} from 'react';
 import "@arco-design/web-react/dist/css/arco.css";
 import '../css/main.scss';
 import '../css/iconfont.css';
@@ -7,7 +7,7 @@ import {PipeContext, UserContext} from '../Context';
 import {SStorage} from "../utils/util";
 
 export function Home() {
-  const [pipeline, setPipeline] = useState({pipeId: "", pipeName: ""});
+  const [pipeline, setPipeline] = useState({pipeId: "dc11b463242f4cb187bf2db8ded2a0c1", pipeName: "管道1"});
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pipeMemo = useMemo(() => ({pipeline, setPipeline}), [pipeline]);
   const {user, setUser} = useContext(UserContext);
@@ -46,10 +46,6 @@ export function Home() {
     SStorage.remove("token");
     setUser({username: "未登录", loggedIn: false});
   }
-
-  useEffect(() => {
-    setPipeline({...pipeline, pipeId: "dc11b463242f4cb187bf2db8ded2a0c1", pipeName: "管道1"})
-  }, [])
 
   return (
     <PipeContext.Provider value={pipeMemo}>

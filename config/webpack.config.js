@@ -732,6 +732,7 @@ module.exports = function (webpackEnv) {
                     },
                 },
             }),
+            isEnvProduction &&
             new CompressionPlugin({
                 filename: "[path][base].br",
                 algorithm: "brotliCompress",
@@ -740,6 +741,7 @@ module.exports = function (webpackEnv) {
                 minRatio: 1,
                 exclude: /\.(png|jpg|jpeg|webp|map)$/
             }),
+            isEnvProduction &&
             new CompressionPlugin({
                 filename: "[path][base].gz",
                 algorithm: "gzip",

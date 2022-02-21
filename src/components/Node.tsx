@@ -109,10 +109,10 @@ export const NodePage = () => {
           <Form.Item label='ID' field='id' disabled={true}>
             <Input/>
           </Form.Item>
-          <Form.Item label='标签' field='tag' rules={[{required: true, message: "标签不能为空"}]}>
+          <Form.Item label='标签' field='tag' rules={[{required: true, message: "标签不能为空"}]} requiredSymbol={false}>
             <Input/>
           </Form.Item>
-          <Form.Item label='偏移' field='bias'
+          <Form.Item label='偏移' field='bias' requiredSymbol={false}
                      rules={[{
                        required: true,
                        message: "范围: -100000 ~ 100000",

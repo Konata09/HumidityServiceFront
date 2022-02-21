@@ -42,12 +42,11 @@ export default function App() {
     }
   }, [])
 
-  return (<UserContext.Provider value={userMemo}>
+  return (
+    <UserContext.Provider value={userMemo}>
       <Routes>
         <Route path="/login" element={<Login/>}/>
-        <Route path="/" element={<RequireAuth>
-          <Home/>
-        </RequireAuth>}>
+        <Route path="/" element={<RequireAuth><Home/></RequireAuth>}>
           <Route path="dashboard" element={<DashboardPage/>}/>
           <Route path="problem" element={<ProblemPage/>}/>
           <Route path="node" element={<NodePage/>}/>
@@ -57,6 +56,5 @@ export default function App() {
         </Route>
       </Routes>
     </UserContext.Provider>
-
   );
 }
