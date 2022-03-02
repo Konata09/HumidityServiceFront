@@ -65,13 +65,20 @@ export const QueryHistory = (props: any) => {
     }
     let lData: object[] = [];
     await Promise.all(selectedNode.map(async (n: NodeT) => {
+      let bias = 0;
+      for (const a of nodes) {
+        if (a.id === n.id && a.bias) {
+          bias = a.bias;
+          break;
+        }
+      }
       const r = await getNodeHistory(n.id, startTime.toISOString(), endTime.toISOString(), every);
       let points = r.data.points;
       for (const point of points) {
         lData.push({
           tag: n.tag,
           time: point.pointTime,
-          value: point.pointValue + n.bias
+          value: point.pointValue + bias
         })
       }
     }))
