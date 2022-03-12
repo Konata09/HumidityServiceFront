@@ -525,3 +525,22 @@ header:not(.arco-panel-date-timepicker-title) {
     margin-bottom: 1rem;
   }
 }
+
+.card-realtime {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .icon-a-Arrowsvertical1-outlined {
+    align-self: start;
+    color: #4f637f;
+    opacity: 0;
+    margin: -0.5rem 2rem 0 0.6rem;
+    font-size: 2rem !important;
+    transition: opacity 0.2s ease-out;
+
+    &:before {
+      position: absolute;
+    }
+  }
+}
