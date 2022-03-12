@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/plots": "^1.0.9",
+    "@antv/g2plot": "^2.4.10",
     "@arco-design/web-react": "^2.29.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.4",
     "@types/node": "^17.0.18",

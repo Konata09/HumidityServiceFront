@@ -55,7 +55,15 @@ export const tagSorter = (a: string, b: string) => {
       return m1[0] - m2[0];
     }
   }
-  return -1
+  return 0;
+}
+
+export const tagAndTimeSorter = (a: any, b: any) => {
+  const tagR = tagSorter(a.tag, b.tag);
+  if (tagR !== 0) {
+    return tagR;
+  }
+  return dayjs(a.time).isBefore(dayjs(b.time)) ? -1 : 1;
 }
 
 export const dayjsToString = (date: Date): string => {

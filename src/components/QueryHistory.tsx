@@ -22,7 +22,7 @@ export const QueryHistory = (props: any) => {
         for (const node of r.data.nodes) {
           nodes_.push({id: node.id, tag: node.tag, bias: node.bias})
         }
-        nodes_ = nodes_.sort((a: any, b: any) => tagSorter(a.tag, b.tag))
+        nodes_.sort((a: any, b: any) => tagSorter(a.tag, b.tag))
         setNodes(nodes_)
         setSelectedNode(nodes_)
       })
@@ -84,7 +84,7 @@ export const QueryHistory = (props: any) => {
         })
       }
     }))
-    lData = lData.sort((a: any, b: any) => tagSorter(a.tag, b.tag))
+    lData.sort((a: any, b: any) => tagSorter(a.tag, b.tag))
     setData(lData)
   }
 

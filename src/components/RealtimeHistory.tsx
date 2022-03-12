@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import {PipeContext} from "../Context";
 import {NodeT} from "../Types";
 import LineChart from "./LineChart";
-import {tagSorter} from "../utils/util";
+import {tagAndTimeSorter, tagSorter} from "../utils/util";
 
 export const RealtimeHistory = (props: any) => {
   const {pipeline} = useContext(PipeContext);
@@ -52,8 +52,8 @@ export const RealtimeHistory = (props: any) => {
         })
       }
     }))
-    lData = lData.sort((a: any, b: any) => tagSorter(a.tag, b.tag))
-    setData(lData)
+    lData.sort((a: any, b: any) => tagSorter(a.tag, b.tag));
+    setData(lData);
   }
 
   const mergeData = (d: Array<NodeT>) => {
@@ -65,9 +65,10 @@ export const RealtimeHistory = (props: any) => {
           time: n.lastTime,
           value: n.value
         })
-      })
-      latestData = latestData.sort((a: any, b: any) => tagSorter(a.tag, b.tag))
-      setDataRef.current(latestData.concat(dataRef.current))
+      });
+      latestData = latestData.concat(dataRef.current);
+      latestData.sort((a: any, b: any) => tagAndTimeSorter(a, b));
+      setDataRef.current(latestData);
     }
   }
 
@@ -79,7 +80,7 @@ export const RealtimeHistory = (props: any) => {
         clearTimeout(updateIconTimer.current);
       }
       setShowUpdateIcon(true)
-      updateIconTimer.current = setTimeout(() => setShowUpdateIcon(false), 450)
+      updateIconTimer.current = setTimeout(() => setShowUpdateIcon(false), 500)
       const r = JSON.parse(e.data)
       mergeData(r.nodes)
     });
