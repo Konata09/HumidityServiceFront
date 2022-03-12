@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import {PipeContext} from "../Context";
 import {NodeT} from "../Types";
 import LineChart from "./LineChart";
+import {tagSorter} from "../utils/util";
 
 export const RealtimeHistory = (props: any) => {
   const {pipeline} = useContext(PipeContext);
@@ -39,7 +40,7 @@ export const RealtimeHistory = (props: any) => {
     const r = await Api.getNodes(pipeline.pipeId, false, false);
     // let nodeCount = r.data.count;
     const nodes: NodeT[] = r.data.nodes;
-    const lData: object[] = [];
+    let lData: object[] = [];
     await Promise.all(nodes.map(async (n) => {
       let r2 = await getNodeHistory(n.id);
       let points = r2.data.points;
@@ -51,12 +52,13 @@ export const RealtimeHistory = (props: any) => {
         })
       }
     }))
+    lData = lData.sort((a: any, b: any) => tagSorter(a.tag, b.tag))
     setData(lData)
   }
 
   const mergeData = (d: Array<NodeT>) => {
     if (setDataRef.current && dataRef.current) {
-      const latestData: Array<object> = [];
+      let latestData: Array<object> = [];
       d.forEach((n) => {
         latestData.push({
           tag: n.tag,
@@ -64,13 +66,14 @@ export const RealtimeHistory = (props: any) => {
           value: n.value
         })
       })
+      latestData = latestData.sort((a: any, b: any) => tagSorter(a.tag, b.tag))
       setDataRef.current(latestData.concat(dataRef.current))
     }
   }
 
   const establishWebsocket = () => {
-    ws.current = new WebSocket(`ws://${window.location.hostname}/ws`);
-    // ws.current = new WebSocket(`ws://101.34.57.204/ws`);
+    // ws.current = new WebSocket(`ws://${window.location.hostname}/ws`);
+    ws.current = new WebSocket(`ws://101.34.57.204/ws`);
     ws.current.addEventListener('message', (e) => {
       if (updateIconTimer.current) {
         clearTimeout(updateIconTimer.current);
@@ -81,7 +84,6 @@ export const RealtimeHistory = (props: any) => {
       mergeData(r.nodes)
     });
   }
-
 
   return (
     <>

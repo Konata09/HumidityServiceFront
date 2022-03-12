@@ -3,6 +3,7 @@ import {Button, Form, Input, InputNumber, Modal, Table} from "@arco-design/web-r
 import {PipeContext} from "../Context";
 import {Api} from "../utils/api";
 import dayjs from "dayjs";
+import {tagSorter} from "../utils/util";
 
 export const NodePage = () => {
   const {pipeline, setPipeline} = useContext(PipeContext);
@@ -45,18 +46,7 @@ export const NodePage = () => {
     }, {
       title: '标签',
       dataIndex: 'tag',
-      sorter: (a: any, b: any) => {
-        const numReg = /[\d]+|\D+/g;
-        const t1 = a.tag;
-        const t2 = b.tag;
-        const m1 = t1.match(numReg);
-        const m2 = t2.match(numReg);
-        if (m1[0] === m2[0]) {
-          return m1[1] - m2[1];
-        } else {
-          return m1[0] - m2[0];
-        }
-      },
+      sorter: (a: any, b: any) => tagSorter(a.tag, b.tag),
       defaultSortOrder: 'ascend' as 'ascend',
     }, {
       title: '偏移',

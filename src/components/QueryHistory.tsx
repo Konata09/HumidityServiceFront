@@ -5,6 +5,7 @@ import {Api} from "../utils/api";
 import {PipeContext} from "../Context";
 import {NodeT} from "../Types";
 import LineChart from "./LineChart";
+import {tagSorter} from "../utils/util";
 
 export const QueryHistory = (props: any) => {
   const [selectedNode, setSelectedNode] = useState<NodeT[]>([]);
@@ -21,6 +22,7 @@ export const QueryHistory = (props: any) => {
         for (const node of r.data.nodes) {
           nodes_.push({id: node.id, tag: node.tag, bias: node.bias})
         }
+        nodes_ = nodes_.sort((a: any, b: any) => tagSorter(a.tag, b.tag))
         setNodes(nodes_)
         setSelectedNode(nodes_)
       })
@@ -82,6 +84,7 @@ export const QueryHistory = (props: any) => {
         })
       }
     }))
+    lData = lData.sort((a: any, b: any) => tagSorter(a.tag, b.tag))
     setData(lData)
   }
 
@@ -163,13 +166,14 @@ export const QueryHistory = (props: any) => {
             defaultValue={nodes.map(n => n.id)}
             allowClear={true}
             labelInValue={true}
-            onChange={(v => {
-              setSelectedNode(v.map((n: any) => {
+            onChange={((value, option) => {
+              setSelectedNode(value.map((n: any) => {
                 n.tag = n.label
                 n.id = n.value
                 return n
               }))
             })}
+            filterOption={((inputValue, option) => option.props.extra.indexOf(inputValue) >= 0)}
             renderTag={({label, value, closable, onClose}, index, valueList) => {
               const tagCount = valueList.length;
               if (tagCount > 1) {
@@ -190,7 +194,7 @@ export const QueryHistory = (props: any) => {
             }}
           >
             {nodes.map((node) => (
-              <Select.Option key={node.id} value={node.id}>
+              <Select.Option key={node.id} value={node.id} extra={node.tag}>
                 {node.tag}
               </Select.Option>
             ))}
