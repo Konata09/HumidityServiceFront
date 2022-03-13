@@ -1,8 +1,8 @@
-import {useContext, useMemo, useState} from 'react';
+import {useContext, useEffect, useMemo, useState} from 'react';
 import "@arco-design/web-react/dist/css/arco.css";
 import '../css/main.scss';
 import '../css/iconfont.css';
-import {NavLink, Outlet} from "react-router-dom";
+import {NavLink, Outlet, useLocation, useNavigate} from "react-router-dom";
 import {PipeContext, UserContext} from '../Context';
 import {SStorage} from "../utils/util";
 
@@ -11,6 +11,14 @@ export function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pipeMemo = useMemo(() => ({pipeline, setPipeline}), [pipeline]);
   const {user, setUser} = useContext(UserContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      navigate("/dashboard", {replace: true});
+    }
+  }, [location.pathname])
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen((s) => !s);
