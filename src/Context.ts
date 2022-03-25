@@ -1,14 +1,14 @@
-import {createContext, Dispatch, SetStateAction} from "react";
-import {PipelineT, UserT} from "./Types";
+import { createContext, Dispatch, SetStateAction } from "react";
+import { PipelineT, UserT } from "./Types";
 
 interface PipeContextType {
-  pipeline: PipelineT,
+  pipeline: PipelineT;
   setPipeline: Dispatch<SetStateAction<PipelineT>>;
 }
 
 interface UserContextType {
-  user: UserT,
-  setUser: Dispatch<SetStateAction<UserT>>
+  user: UserT;
+  setUser: Dispatch<SetStateAction<UserT>>;
 }
 
 export const UserContext = createContext<UserContextType>(null!);
