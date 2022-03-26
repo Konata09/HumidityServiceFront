@@ -59,7 +59,7 @@ export const NodePage = () => {
       title: "标签",
       dataIndex: "tag",
       sorter: (a: any, b: any) => tagSorter(a.tag, b.tag),
-      defaultSortOrder: "ascend" as "ascend",
+      defaultSortOrder: "ascend" as const,
     },
     {
       title: "偏移",

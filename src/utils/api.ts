@@ -38,14 +38,14 @@ const fetchApi = async (
       return null;
     }
   }
-  let res = await fetch(path, {
+  const res = await fetch(path, {
     method: method,
     body: JSON.stringify(jsonBody),
     headers: { Authorization: "Bearer " + token },
   });
   // console.debug(res)
   if (res.ok) {
-    let jsonData = await res.json();
+    const jsonData = await res.json();
     if (jsonData.retcode !== 0) {
       showMessage(jsonData.message, SEVERITY.ERROR);
     }
