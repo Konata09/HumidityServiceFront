@@ -12,6 +12,7 @@ import { PipeContext } from "../Context";
 import { NodeT } from "../Types";
 import LineChart from "./LineChart";
 import { tagAndTimeSorter, tagSorter } from "../utils/util";
+import { Message } from "@arco-design/web-react";
 
 export const RealtimeHistory = (props: any) => {
   const { pipeline } = useContext(PipeContext);
@@ -93,13 +94,22 @@ export const RealtimeHistory = (props: any) => {
     // ws.current = new WebSocket(`ws://${window.location.hostname}/ws`);
     ws.current = new WebSocket(`ws://101.34.57.204/ws`);
     ws.current.addEventListener("message", (e) => {
-      if (updateIconTimer.current) {
-        clearTimeout(updateIconTimer.current);
-      }
+      updateIconTimer.current && clearTimeout(updateIconTimer.current);
       setShowUpdateIcon(true);
       updateIconTimer.current = setTimeout(() => setShowUpdateIcon(false), 500);
       const r = JSON.parse(e.data);
       mergeData(r.nodes);
+    });
+    ws.current.addEventListener("close", (e) => {
+      setShowUpdateIcon(false);
+      updateIconTimer.current && clearTimeout(updateIconTimer.current);
+      if (e.code !== 1000) {
+        setTimeout(() => establishWebsocket(), 20000);
+        Message.warning({
+          content: "与服务器的连接中断, 20秒后重新连接",
+          duration: 5000,
+        });
+      }
     });
   };
 
