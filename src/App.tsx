@@ -5,7 +5,6 @@ import "./css/iconfont.css";
 import { Route, Routes } from "react-router-dom";
 import { DashboardPage } from "./components/Dashboard";
 import { SettingsPage } from "./components/Settings";
-import { ProblemPage } from "./components/Problem";
 import { NodePage } from "./components/Node";
 import { G2 } from "@ant-design/plots";
 import { Home } from "./components/Home";
@@ -14,6 +13,8 @@ import { UserContext } from "./Context";
 import { JwtClaimT, UserT } from "./Types";
 import { SStorage } from "./utils/util";
 import { decodeJwt } from "jose";
+import { ProblemsPage } from "./components/Problems";
+import { UsersPage } from "./components/Users";
 
 G2.registerTheme("default", {
   defaultColor: "#505050",
@@ -88,11 +89,11 @@ export default function App() {
           }
         >
           <Route path="dashboard" element={<DashboardPage />} />
-          <Route path="problem" element={<ProblemPage />} />
-          <Route path="node" element={<NodePage />} />
+          <Route path="problems" element={<ProblemsPage />} />
+          <Route path="nodes" element={<NodePage />} />
           <Route path="settings" element={<SettingsPage />} />
           <Route path="changePassword" element={<SettingsPage />} />
-          <Route path="user" element={<SettingsPage />} />
+          <Route path="users" element={<UsersPage />} />
         </Route>
       </Routes>
     </UserContext.Provider>

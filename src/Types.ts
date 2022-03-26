@@ -43,3 +43,18 @@ export interface JwtClaimT extends JWTPayload {
   uid?: string;
   username?: string;
 }
+
+export interface ProblemT {
+  id: string;
+  title: string;
+  desc: string;
+  startTime: string;
+  acked: number;
+  ackTime?: string;
+  ackUser?: string;
+  severity: number;
+  pipelineId: string;
+  pipelineName: string;
+  nodeId: string;
+  nodeTag: string;
+}

@@ -66,20 +66,20 @@ export const Api = {
   refreshToken: (username: string, password: string) => {
     return fetchApi("POST", "/api/v1/refreshToken", true);
   },
-  adminGetUser: () => {
+  adminGetUsers: () => {
     return fetchApi("GET", "/api/v1/admin/user", true);
   },
-  adminPutUser: (username: string, password: string, rolename: string) => {
+  adminPutUser: (username: string, password: string, roleName: string) => {
     return fetchApi("PUT", "/api/v1/admin/user", true, {
       username: username,
       password: password,
-      rolename: rolename,
+      roleName: roleName,
     });
   },
   adminPostUser: (uid: string, newPassword: string) => {
     return fetchApi("POST", "/api/v1/admin/user", true, {
       uid: uid,
-      new_pass: newPassword,
+      newPassword: newPassword,
     });
   },
   adminDeleteUser: (uid: string) => {
@@ -94,8 +94,8 @@ export const Api = {
   ) => {
     return fetchApi("POST", "/api/v1/changePassword", true, {
       uid: uid,
-      old_pass: oldPassword,
-      new_pass: newPassword,
+      oldPassword: oldPassword,
+      newPassword: newPassword,
     });
   },
   userChangeUsername: (username: string) => {

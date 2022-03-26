@@ -90,7 +90,7 @@ export const Login = () => {
               className="login-form-input"
               rules={[{ required: true, message: "清输入密码" }]}
             >
-              <Input />
+              <Input type="password" />
             </Form.Item>
             <Form.Item
               wrapperCol={{ offset: 10 }}

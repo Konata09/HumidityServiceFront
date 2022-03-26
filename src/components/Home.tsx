@@ -120,7 +120,7 @@ export function Home() {
               </li>
               <li>
                 <NavLink
-                  to="/problem"
+                  to="/problems"
                   id="menu-problem"
                   className={getLinkClass}
                   onClick={() => setMobileMenuOpen(false)}
@@ -131,7 +131,7 @@ export function Home() {
               </li>
               <li>
                 <NavLink
-                  to="/node"
+                  to="/nodes"
                   className={getLinkClass}
                   onClick={() => setMobileMenuOpen(false)}
                 >
@@ -139,7 +139,17 @@ export function Home() {
                   节点
                 </NavLink>
               </li>
-              <li className="menu-setting">
+              <li className="menu-hr">
+                <NavLink
+                  to="/users"
+                  className={getLinkClass}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <span className="iconfont icon-users" />
+                  用户
+                </NavLink>
+              </li>
+              <li>
                 <NavLink
                   to="/settings"
                   className={getLinkClass}

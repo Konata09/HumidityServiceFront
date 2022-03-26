@@ -23,7 +23,9 @@ export const NodePage = () => {
   useEffect(() => {
     if (pipeline.pipeId && loading) {
       Api.getNodes(pipeline.pipeId, true, true).then((r) => {
-        setNodes(r.data.nodes);
+        if (r.data.count > 0) {
+          setNodes(r.data.nodes);
+        }
         setLoading(false);
       });
     }
@@ -41,7 +43,7 @@ export const NodePage = () => {
   const handleSubmit = () => {
     editForm.validate().then((res) => {
       setConfirmLoading(true);
-      Api.postNode(res.id, res.tag, res.bias).then((r) => {
+      Api.postNode(res.id, res.tag, res.bias).then(() => {
         setConfirmLoading(false);
         setVisible(false);
       });
@@ -101,55 +103,63 @@ export const NodePage = () => {
   ];
 
   return (
-    <div className="flex-col node-page flex-center">
-      <div className="page-title">节点列表</div>
-      <Table
-        data={nodes}
-        columns={cols}
-        pagination={{ sizeCanChange: true, defaultPageSize: 30 }}
-        loading={loading}
-      />
-      <Modal
-        title="修改节点"
-        visible={visible}
-        onOk={handleSubmit}
-        confirmLoading={confirmLoading}
-        onCancel={() => setVisible(false)}
-      >
-        <Form
-          form={editForm}
-          labelCol={{ style: { flexBasis: 80 }, span: 4 }}
-          wrapperCol={{ style: { flexBasis: "calc(100% - 80px)" }, span: 20 }}
+    <div className="scroll-bfc white-background">
+      <div className="flex-col node-page">
+        <div className="page-title">节点列表</div>
+        <Table
+          data={nodes}
+          columns={cols}
+          pagination={{ sizeCanChange: true, defaultPageSize: 30 }}
+          loading={loading}
+        />
+        <Modal
+          title="修改节点"
+          visible={visible}
+          onOk={handleSubmit}
+          confirmLoading={confirmLoading}
+          onCancel={() => setVisible(false)}
         >
-          <Form.Item label="ID" field="id" disabled={true}>
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="标签"
-            field="tag"
-            rules={[{ required: true, message: "标签不能为空" }]}
-            requiredSymbol={false}
+          <Form
+            form={editForm}
+            labelCol={{ style: { flexBasis: 80 }, span: 4 }}
+            wrapperCol={{ style: { flexBasis: "calc(100% - 80px)" }, span: 20 }}
           >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="偏移"
-            field="bias"
-            requiredSymbol={false}
-            rules={[
-              {
-                required: true,
-                message: "范围: -100000 ~ 100000",
-                type: "number",
-                min: -100000,
-                max: 100000,
-              },
-            ]}
-          >
-            <InputNumber />
-          </Form.Item>
-        </Form>
-      </Modal>
+            <Form.Item
+              label="ID"
+              field="id"
+              disabled={true}
+              rules={[{ required: true, message: "ID不能为空" }]}
+              requiredSymbol={false}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="标签"
+              field="tag"
+              rules={[{ required: true, message: "标签不能为空" }]}
+              requiredSymbol={false}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="偏移"
+              field="bias"
+              requiredSymbol={false}
+              rules={[
+                {
+                  required: true,
+                  message: "范围: -100000 ~ 100000",
+                  type: "number",
+                  min: -100000,
+                  max: 100000,
+                },
+              ]}
+            >
+              <InputNumber />
+            </Form.Item>
+          </Form>
+        </Modal>
+      </div>
     </div>
   );
 };
