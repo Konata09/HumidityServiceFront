@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Button,
   Form,
@@ -10,8 +10,10 @@ import {
 } from "@arco-design/web-react";
 import { Api } from "../utils/api";
 import { UserT } from "../Types";
+import { UserContext } from "../Context";
 
 export const UsersPage = () => {
+  const { user } = useContext(UserContext);
   const [users, setUsers] = useState<UserT[]>([]);
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState<boolean>(true);
@@ -137,7 +139,9 @@ export const UsersPage = () => {
           visible={visible}
           footer={
             <>
-              {!add ? (
+              {!add &&
+              editForm.getFieldValue("username") !== "admin" &&
+              editForm.getFieldValue("uid") !== user.uid ? (
                 <Popconfirm
                   position="bottom"
                   title="确定要删除该用户吗?"
