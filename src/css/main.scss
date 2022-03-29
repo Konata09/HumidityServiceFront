@@ -363,11 +363,10 @@ header:not(.arco-panel-date-timepicker-title) {
 
         #menu-problem:after {
           margin: 0 0.4rem 0 0.4rem;
-          content: '0';
+          content: attr(data-content) ;
           font-size: 1rem;
           font-weight: bold;
           line-height: 1.1rem;
-          //background-color: rgb(241, 64, 60);
           background-color: $theme;
           padding-left: 0.5rem;
           padding-right: 0.5rem;

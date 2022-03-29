@@ -11,6 +11,14 @@ interface UserContextType {
   setUser: Dispatch<SetStateAction<UserT>>;
 }
 
+interface GlobalContextType {
+  problemCount: number;
+  setProblemCount: Dispatch<SetStateAction<number>>;
+  theme: string;
+  setTheme: Dispatch<SetStateAction<string>>;
+}
+
+export const GlobalContext = createContext<GlobalContextType>(null!);
 export const UserContext = createContext<UserContextType>(null!);
 export const PipeContext = createContext<PipeContextType>(null!);
 

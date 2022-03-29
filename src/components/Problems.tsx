@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Modal, Spin, Table } from "@arco-design/web-react";
 import { Api } from "../utils/api";
 import { ProblemT } from "../Types";
@@ -10,6 +10,7 @@ import {
   IconQuestionCircleFill,
 } from "@arco-design/web-react/icon";
 import dayjs from "dayjs";
+import { GlobalContext } from "../Context";
 
 export const ProblemsPage = () => {
   const [problems, setProblems] = useState<ProblemT[]>([]);
@@ -18,6 +19,7 @@ export const ProblemsPage = () => {
   const [modalLoading, setModalLoading] = useState<boolean>(true);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [visible, setVisible] = useState(false);
+  const { setProblemCount } = useContext(GlobalContext);
 
   useEffect(() => {
     if (loading) {
@@ -28,6 +30,13 @@ export const ProblemsPage = () => {
             dayjs(a.startTime).isBefore(dayjs(b.startTime))
           );
           setProblems(pros);
+          let count = 0;
+          for (const pro of r.data.problems as Array<ProblemT>) {
+            if (pro.acked === 0) {
+              count++;
+            }
+          }
+          setProblemCount(count);
         }
         setLoading(false);
       });
