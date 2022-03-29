@@ -70,7 +70,7 @@ export function Home() {
               <img src="" className="logo" />
             </div>
             <div className="header-title">
-              <span>XXX实时监测分析系统</span>
+              <span>XXX地下水管实时监测分析系统</span>
             </div>
           </div>
           <div className="header-right">

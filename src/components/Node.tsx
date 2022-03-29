@@ -88,11 +88,11 @@ export const NodePage = () => {
       className: "col-center",
       render: (t: string) => dayjs(t).format("YYYY-MM-DD HH:mm:ss"),
     },
-    {
-      title: "管道",
-      dataIndex: "pipeline",
-      className: "col-id col-center",
-    },
+    // {
+    //   title: "管道",
+    //   dataIndex: "pipeline",
+    //   className: "col-id col-center",
+    // },
     {
       title: "操作",
       className: "col-center",
@@ -113,6 +113,7 @@ export const NodePage = () => {
           loading={loading}
         />
         <Modal
+          closable={false}
           title="修改节点"
           visible={visible}
           onOk={handleSubmit}

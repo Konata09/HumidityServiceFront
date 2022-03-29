@@ -66,7 +66,7 @@ export const Login = () => {
     <Navigate to={from} replace={true} />
   ) : (
     <div className="flex-center flex-col login-main">
-      <h1>欢迎使用实时监测分析系统</h1>
+      <h1>欢迎使用地下水管实时监测分析系统</h1>
       <div>
         <h2>请登录</h2>
         <div className="card login-card flex-col flex-center">
@@ -82,7 +82,7 @@ export const Login = () => {
               className="login-form-input"
               rules={[{ required: true, message: "请输入用户名" }]}
             >
-              <Input />
+              <Input autoFocus={true} />
             </Form.Item>
             <Form.Item
               label="密码"

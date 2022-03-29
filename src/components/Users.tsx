@@ -135,6 +135,7 @@ export const UsersPage = () => {
           loading={loading}
         />
         <Modal
+          closable={false}
           title={add ? "新增用户" : "修改用户"}
           visible={visible}
           footer={
