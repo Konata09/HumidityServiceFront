@@ -57,13 +57,13 @@ export const QueryHistory = (props: any) => {
   const getSelectedHistory = async () => {
     let every: string;
     const interval = endTime.diff(startTime, "h");
-    if (interval < 1) {
+    if (interval < 2) {
       every = "";
-    } else if (interval < 3) {
+    } else if (interval < 4) {
       every = "3m";
-    } else if (interval < 6) {
+    } else if (interval < 8) {
       every = "6m";
-    } else if (interval < 12) {
+    } else if (interval < 14) {
       every = "12m";
     } else if (interval < 24) {
       every = "30m";

@@ -62,9 +62,7 @@ export const Login = () => {
     });
   }
 
-  return user.loggedIn ? (
-    <Navigate to={from} replace={true} />
-  ) : (
+  return (
     <div className="flex-center flex-col login-main">
       <h1>欢迎使用地下水管实时监测分析系统</h1>
       <div>

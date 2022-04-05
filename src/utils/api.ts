@@ -1,4 +1,6 @@
 import { SStorage } from "./util";
+import { Message } from "@arco-design/web-react";
+import { history } from "../index";
 
 const SEVERITY = {
   INFO: 1,
@@ -6,16 +8,23 @@ const SEVERITY = {
   ERROR: 3,
 };
 
-const showMessage = (message: string, severity: number): void => {
+const showMessage = (code: number, message: string, severity: number): void => {
+  if (code === 401) {
+    Message.error("登录已失效, 请重新登录");
+    history.push("/login");
+  }
   switch (severity) {
     case SEVERITY.WARN:
       console.log(message);
+      Message.warning(message);
       return;
     case SEVERITY.ERROR:
       console.error(message);
+      Message.error(message);
       return;
     default:
       console.log(message);
+      Message.info(message);
       return;
   }
 };
@@ -34,7 +43,7 @@ const fetchApi = async (
   if (needAuth) {
     token = SStorage.get("token");
     if (!token) {
-      showMessage("请先登录", SEVERITY.ERROR);
+      showMessage(403, "请先登录", SEVERITY.ERROR);
       return null;
     }
   }
@@ -43,15 +52,15 @@ const fetchApi = async (
     body: JSON.stringify(jsonBody),
     headers: { Authorization: "Bearer " + token },
   });
-  // console.debug(res)
+
   if (res.ok) {
     const jsonData = await res.json();
     if (jsonData.retcode !== 0) {
-      showMessage(jsonData.message, SEVERITY.ERROR);
+      showMessage(-1, jsonData.message, SEVERITY.ERROR);
     }
     return jsonData;
   } else {
-    showMessage(`${res.status} ${res.statusText}`, SEVERITY.ERROR);
+    showMessage(res.status, res.statusText, SEVERITY.ERROR);
     return null;
   }
 };
@@ -63,7 +72,7 @@ export const Api = {
       password: password,
     });
   },
-  refreshToken: (username: string, password: string) => {
+  refreshToken: () => {
     return fetchApi("POST", "/api/v1/refreshToken", true);
   },
   adminGetUsers: () => {

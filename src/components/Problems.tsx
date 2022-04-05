@@ -256,7 +256,10 @@ export const ProblemsPage = () => {
                 <td className="problem-detail-title">已确认</td>
                 <td style={{ display: "flex", alignItems: "center" }}>
                   {problem?.acked === 1 ? (
-                    <IconCheckCircleFill className="icon-success problem-tbl-icon" />
+                    <>
+                      <IconCheckCircleFill className="icon-success problem-tbl-icon" />
+                      <span>&nbsp;</span>
+                    </>
                   ) : (
                     <>
                       <IconQuestionCircleFill className="icon-unknown problem-tbl-icon" />
