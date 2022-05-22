@@ -349,6 +349,18 @@ module.exports = function (webpackEnv) {
                     // match the requirements. When no loader matches it will fall
                     // back to the "file" loader at the end of the loader list.
                     oneOf: [
+                        {
+                            test: [/\.(glb|gltf)$/],
+                            type: 'asset/resource',
+                            mimetype: 'model/gltf-binary',
+                            use: [{
+                                loader: require.resolve('file-loader'),
+                                options: {
+
+                                    name: 'static/media/[name].[hash].[ext]',
+                                },
+                            }]
+                        },
                         // TODO: Merge this config once `image/avif` is in the mime-db
                         // https://github.com/jshttp/mime-db
                         {

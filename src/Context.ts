@@ -1,5 +1,5 @@
 import { createContext, Dispatch, SetStateAction } from "react";
-import { PipelineT, UserT } from "./Types";
+import {PipelineT, SettingsT, UserT} from "./Types";
 
 interface PipeContextType {
   pipeline: PipelineT;
@@ -16,6 +16,8 @@ interface GlobalContextType {
   setProblemCount: Dispatch<SetStateAction<number>>;
   theme: string;
   setTheme: Dispatch<SetStateAction<string>>;
+  settings: SettingsT;
+  setSettings: Dispatch<SetStateAction<SettingsT>>
 }
 
 export const GlobalContext = createContext<GlobalContextType>(null!);

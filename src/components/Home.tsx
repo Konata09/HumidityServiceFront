@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, {useContext, useEffect, useMemo, useState} from "react";
 import "@arco-design/web-react/dist/css/arco.css";
 import "../css/main.scss";
 import "../css/iconfont.css";
-import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { GlobalContext, PipeContext, UserContext } from "../Context";
-import { SStorage } from "../utils/util";
-import { Api } from "../utils/api";
-import { ProblemT } from "../Types";
+import {NavLink, Outlet, useLocation, useNavigate} from "react-router-dom";
+import {GlobalContext, PipeContext, UserContext} from "../Context";
+import {SStorage} from "../utils/util";
+import {Api} from "../utils/api";
+import {ProblemT, SettingsT} from "../Types";
 
 export function Home() {
   const [pipeline, setPipeline] = useState({
@@ -16,20 +16,37 @@ export function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [problemCount, setProblemCount] = useState(0);
   const [theme, setTheme] = useState("light");
-  const pipeMemo = useMemo(() => ({ pipeline, setPipeline }), [pipeline]);
+  const [settings, setSettings] = useState<SettingsT>({testMethod: "mk"});
+  const pipeMemo = useMemo(() => ({pipeline, setPipeline}), [pipeline]);
   const globalMemo = useMemo(
-    () => ({ problemCount, setProblemCount, theme, setTheme }),
-    [pipeline]
+    () => ({
+      problemCount,
+      setProblemCount,
+      theme,
+      setTheme,
+      settings,
+      setSettings,
+    }),
+    [settings]
   );
-  const { user, setUser } = useContext(UserContext);
+  const {user, setUser} = useContext(UserContext);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
     if (location.pathname === "/") {
-      navigate("/dashboard", { replace: true });
+      navigate("/dashboard", {replace: true});
     }
   }, [location.pathname]);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-user-color-scheme', theme)
+    if (theme === "light") {
+      document.body.removeAttribute('arco-theme');
+    } else {
+      document.body.setAttribute('arco-theme', 'dark');
+    }
+  }, [theme])
 
   useEffect(() => {
     Api.getProblems().then((r) => {
@@ -49,7 +66,7 @@ export function Home() {
     setMobileMenuOpen((s) => !s);
   };
 
-  const getLinkClass = ({ isActive }: any): string => {
+  const getLinkClass = ({isActive}: any): string => {
     let cl = "";
     if (mobileMenuOpen) {
       cl = cl.concat(" mobile-show");
@@ -80,7 +97,16 @@ export function Home() {
 
   const logout = () => {
     SStorage.remove("token");
-    setUser({ username: "未登录", loggedIn: false });
+    setUser({username: "未登录", loggedIn: false});
+  };
+
+  const THEME = {
+    light: "dark",
+    dark: "light",
+  } as any;
+
+  const toggleTheme = () => {
+    setTheme(THEME[theme]);
   };
 
   return (
@@ -90,15 +116,22 @@ export function Home() {
           <div id="nav" className="flex-row">
             <div className="flex-row flex-center header-left">
               <div className="header-logo">
-                <img src="" className="logo" />
+                <img src="" className="logo"/>
               </div>
               <div className="header-title">
-                <span>XXX地下水管实时监测分析系统</span>
+                <span>地下水管实时监测分析系统</span>
               </div>
             </div>
             <div className="header-right">
               <div className="header-icons">
-                <span className="iconfont icon-dark_mode_black_24dp" />
+                <span
+                  className={
+                    theme === "dark"
+                      ? "iconfont icon-light_mode_black_24dp"
+                      : "iconfont icon-dark_mode_black_24dp"
+                  }
+                  onClick={toggleTheme}
+                />
                 <span
                   id="icon-user"
                   className="iconfont icon-user"
@@ -126,8 +159,8 @@ export function Home() {
               id="menu"
               style={
                 mobileMenuOpen
-                  ? { alignItems: "baseline" }
-                  : { alignItems: "center" }
+                  ? {alignItems: "baseline"}
+                  : {alignItems: "center"}
               }
             >
               <ul>
@@ -137,7 +170,7 @@ export function Home() {
                     className={getLinkClass}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <span className="iconfont icon-dashboard" />
+                    <span className="iconfont icon-dashboard"/>
                     仪表板
                   </NavLink>
                 </li>
@@ -150,7 +183,7 @@ export function Home() {
                     data-content={problemCount}
                     data-color="#aa0000"
                   >
-                    <span className="iconfont icon-alert" />
+                    <span className="iconfont icon-alert"/>
                     问题
                   </NavLink>
                 </li>
@@ -160,7 +193,7 @@ export function Home() {
                     className={getLinkClass}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <span className="iconfont icon-node" />
+                    <span className="iconfont icon-node"/>
                     节点
                   </NavLink>
                 </li>
@@ -170,7 +203,7 @@ export function Home() {
                     className={getLinkClass}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <span className="iconfont icon-users" />
+                    <span className="iconfont icon-users"/>
                     用户
                   </NavLink>
                 </li>
@@ -180,14 +213,14 @@ export function Home() {
                     className={getLinkClass}
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <span className="iconfont icon-settings" />
+                    <span className="iconfont icon-settings"/>
                     设置
                   </NavLink>
                 </li>
                 {mobileMenuOpen ? (
                   <>
                     <div className="mobile-menu">
-                      <div className="menu-line" />
+                      <div className="menu-line"/>
                     </div>
                     <li className="mobile-menu mobile-menu-first">修改密码</li>
                     <li className="mobile-menu" onClick={logout}>
@@ -208,7 +241,7 @@ export function Home() {
               />
             </div>
           </div>
-          <Outlet />
+          <Outlet/>
         </div>
       </PipeContext.Provider>
     </GlobalContext.Provider>

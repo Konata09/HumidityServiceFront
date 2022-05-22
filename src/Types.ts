@@ -58,3 +58,7 @@ export interface ProblemT {
   nodeId: string;
   nodeTag: string;
 }
+
+export interface SettingsT {
+  testMethod: "ml" | "mk" | "th";
+}

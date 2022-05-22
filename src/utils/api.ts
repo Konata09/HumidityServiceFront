@@ -12,6 +12,7 @@ const showMessage = (code: number, message: string, severity: number): void => {
   if (code === 401) {
     Message.error("登录已失效, 请重新登录");
     history.push("/login");
+    return;
   }
   switch (severity) {
     case SEVERITY.WARN:

@@ -109,7 +109,7 @@ export const NodePage = () => {
         <Table
           data={nodes}
           columns={cols}
-          pagination={{ sizeCanChange: true, defaultPageSize: 30 }}
+          pagination={{ sizeCanChange: true, defaultPageSize: 10 }}
           loading={loading}
         />
         <Modal

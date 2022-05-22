@@ -1,38 +1,57 @@
+@font-face {
+  font-family: 'PangMenZhengDao-3';
+  src: url('../assets/title.ttf') format('truetype');
+}
+
 :root {
-  --bg: #f2f5f8;
-  --main: #fff;
-  --t: #37475b;
-  --t-l: #64778b;
-  --logo: #000;
+  --theme: rgb(67, 128, 255);
+  --theme-light: rgb(67, 128, 255);
+  --hover-bg: #efefef;
+  --active-bg: rgba(57, 146, 255, .125);
   --link: #1f6dda;
-  --title: #475c6e;
-  --fab: #fff;
-  --scroll-y: .35rem;
-  --scroll-x: .28rem;
-  --t-s: #2f3d4e;
-  --alt: #e6e8ee;
-  --link-hover: #363636;
-  --hover-bg: #eceef2;
-  --tag: #eceef2;
-  --border: #e3e6eb;
-  --c-bg: #f4f5f7;
-  --code: #405363;
-  --olay: hsla(0, 0%, 100%, 0.9);
+  --main-bg: #f2f5f8;
+  --main: #fff;
+  --main-side: #fff;
+  --text: #363636;
+  --text2: #363636;
+  --border: #e8ebee;
+  --shadow: 0 4px 10px rgba(0, 2, 4, .06), 0 0 1px rgba(0, 2, 4, .11);
+  --shadow-btn: 0 2px 5px rgba(0, 2, 5, .2), 0 0 1px rgba(0, 2, 4, .4);
+  --radius: 0.5rem;
+  --header-icon: #4f637f;
+  --font-size: 1.5rem;
+  --font-size-sub: 1.3rem;
+  --font-weight: bold;
+
+  a {
+    color: var(--text);
+  }
+}
+
+[data-user-color-scheme='dark'] {
+  --theme: #0ff;
+  --theme-light: #009898;
+  --hover-bg: rgba(0, 255, 255, 0.65);
+  --active-bg: rgba(0, 255, 255, .125);
+  --link: #0ff;
+  //--main-bg: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAPwCAYAAADwMxSoAAAABGdBTUEAALGPC/xhBQAAAXBJREFUWAntV0kSwjAMS/sjXsCZM//mS8GSbMft0JmeGXPoEC+yoiRuOp6v92cfcz72OebYh/3OjzkvHAxe3o259twtwVCYhqFAaUOIF9oiJNOMQHrtn/CGxSkjAYQnuvAWfmQKZIIiRFw0BOjid5wv49x7b76sQZLG7DAZDGmTV0JczVdeAGCqjhfEOWQharBRDWaohsXRxhDFpVc2Q7ClICEGBzXaDK4St1TQsAeF+IkHBkPCUqYYqhpyuR5imhKX4eJnRXyhYJOIABAU4xDieEBOr8uE4IWXXgLUbZGgCJEjdWGwC8EaIZMcd+a74CkJh6HLoqGFQt1l8xrIOM5XDq4HmdpYupxyL4WgVvIm8qpBB2sUNTDV4tDiha3x6hoVmaRurHlxtH7ezXr/1WPV+8UbWZ+PPh94X+IdX9pmn48+H7gj4cbDbeE3FFyo8k3S+wXXwePB6X7a+6X7aX/PoDOwgfJjNHpE99N/eH98Ac+Gynw9gIJjAAAAAElFTkSuQmCC) repeat-x left top;
+  --main-bg: url(../assets/main.jpg) center no-repeat;
+  --main: rgba(26, 29, 33, 0);
+  --main-side: rgba(26, 29, 33, 0.7);
+  --text: #fff;
+  --text2: #0ff;
+  --border: rgba(0, 255, 255, 0.89);
+  --shadow: 0 0 1px 1px rgba(0, 255, 255, 0.78);
+  --shadow-btn: 0 2px 5px rgba(0, 2, 5, .2), 0 0 1px rgba(0, 2, 4, .4);
+  --radius: 0.5rem;
+  --header-icon: rgba(0, 255, 255, 0.65);
+  --header-bg: url(../assets/header.jpg) center;
+  --font: 'PangMenZhengDao-3';
+  --font-size: 1.9rem;
+  --font-size-sub: 1.6rem;
 }
 
 $small-width: 960px;
-$theme: rgb(67, 128, 255);
-$hover-bg: #efefef;
-$active-bg: rgba(57, 146, 255, .125);
-$link: #1f6dda;
-$main-bg: #f2f5f8;
-$main: #fff;
-$text: #363636;
-$border: #e8ebee;
-$shadow: 0 4px 10px rgba(0, 2, 4, .06), 0 0 1px rgba(0, 2, 4, .11);
-$shadow-btn: 0 2px 5px rgba(0, 2, 5, .2), 0 0 1px rgba(0, 2, 4, .4);
-$radius: 0.5rem;
-
 
 *, ::before, ::after {
   margin: 0;
@@ -40,18 +59,6 @@ $radius: 0.5rem;
   border-width: 0;
   border-style: solid;
   box-sizing: border-box;
-}
-
-div:not(.arco-form-message,.arco-form-message>div) {
-  color: $text;
-}
-
-span:not(.iconfont,.arco-btn>span,.arco-checkbox-mask-icon,path,.arco-icon-loading,.arco-spin-icon) {
-  color: $text;
-}
-
-a {
-  color: $text;
 }
 
 a {
@@ -67,9 +74,12 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Microsoft YaHei, Source Han Sans SC, Noto Sans CJK SC, WenQuanYi Micro Hei, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: $main-bg;
+  background-color: var(--main-bg);
+  background: var(--main-bg);
+  background-size: cover;
   height: 100vh;
   overflow: hidden;
+  min-width: 240px;
 }
 
 .flex-row {
@@ -93,8 +103,10 @@ body {
 
 
 header:not(.arco-panel-date-timepicker-title) {
-  background-color: $main;
-  box-shadow: $shadow;
+  background: var(--header-bg);
+  background-size: cover;
+  background-color: var(--main);
+  box-shadow: var(--shadow);
   padding: 0 2rem;
   z-index: 5;
   position: fixed;
@@ -111,9 +123,12 @@ header:not(.arco-panel-date-timepicker-title) {
   }
 
   .header-title {
-    font-size: 1.5rem;
+    font-size: var(--font-size);
     overflow: hidden;
     white-space: nowrap;
+    font-family: var(--font);
+    color: var(--text2);
+    font-weight: var(--font-weight);
 
     span {
       width: 100%;
@@ -133,14 +148,14 @@ header:not(.arco-panel-date-timepicker-title) {
 
   .header-icons {
     .iconfont {
-      color: #4f637f;
+      color: var(--header-icon);
       font-size: 1.6rem;
       margin: 0 1rem;
       cursor: pointer;
       transition: color 0.2s ease;
 
       &:hover {
-        color: $link;
+        color: var(--link);
       }
     }
 
@@ -153,10 +168,10 @@ header:not(.arco-panel-date-timepicker-title) {
 
       ul {
         position: absolute;
-        background-color: $main;
+        background-color: var(--main-side);
         padding: 0.4rem 0;
-        border: 1px solid $border;
-        border-radius: $radius;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
         box-shadow: 0 2px 12px rgba(0, 2, 4, .08), 0 0 2px rgba(0, 2, 4, .14);
         margin-left: 2.7rem;
         transition: all 0.2s ease;
@@ -168,6 +183,7 @@ header:not(.arco-panel-date-timepicker-title) {
           font-size: 1rem;
           margin: 0.2rem 0;
           display: inline-block;
+          color: var(--text);
         }
 
         li {
@@ -175,10 +191,11 @@ header:not(.arco-panel-date-timepicker-title) {
           font-size: 1rem;
           padding: 0.3rem 0.6rem;
           transition: background-color 0.2s ease;
+          color: var(--text);
 
           &:hover {
-            background-color: $hover-bg;
-            //color: $link;
+            background-color: var(--hover-bg);
+            //color: var(--link);
             cursor: pointer;
           }
         }
@@ -215,7 +232,7 @@ header:not(.arco-panel-date-timepicker-title) {
   }
 
   #menu {
-    background-color: $main;
+    background-color: var(--main-side);
     width: 100vw;
     box-shadow: 0 10px 10px rgba(0, 2, 4, .06), 0 1px 1px rgba(0, 2, 4, .11);
     padding: 0.5rem;
@@ -257,7 +274,7 @@ header:not(.arco-panel-date-timepicker-title) {
           display: none;
 
           &.active {
-            color: $link;
+            color: var(--link);
             display: inline-block;
           }
 
@@ -280,7 +297,7 @@ header:not(.arco-panel-date-timepicker-title) {
 
       .menu-line {
         margin-top: 0.2rem;
-        border-top: solid $border 1px;
+        border-top: solid var(--border) 1px;
         width: 84vw;
         left: 8vw;
         position: absolute;
@@ -315,7 +332,7 @@ header:not(.arco-panel-date-timepicker-title) {
   }
 
   #menu {
-    background-color: $main;
+    background-color: var(--main-side);
     position: fixed;
     top: 3rem;
     width: 15rem;
@@ -334,7 +351,7 @@ header:not(.arco-panel-date-timepicker-title) {
           padding: 0.2rem 1.2rem;
           display: flex;
           font-size: 1.1rem;
-          border-radius: $radius;
+          border-radius: var(--radius);
           align-items: center;
 
           .iconfont {
@@ -352,22 +369,22 @@ header:not(.arco-panel-date-timepicker-title) {
           }
 
           &:hover {
-            background-color: $hover-bg;
+            background-color: var(--hover-bg);
           }
         }
 
         a.active {
-          color: $link;
-          background-color: $active-bg;
+          color: var(--link);
+          background-color: var(--active-bg);
         }
 
         #menu-problem:after {
           margin: 0 0.4rem 0 0.4rem;
-          content: attr(data-content) ;
+          content: attr(data-content);
           font-size: 1rem;
           font-weight: bold;
           line-height: 1.1rem;
-          background-color: $theme;
+          background-color: var(--theme-light);
           padding-left: 0.5rem;
           padding-right: 0.5rem;
           color: #fff;
@@ -387,7 +404,7 @@ header:not(.arco-panel-date-timepicker-title) {
         width: auto;
         display: block;
         margin: 0 0.2rem 1rem 0.2rem;
-        border-top: 1px solid $border;
+        border-top: 1px solid var(--border);
       }
     }
 
@@ -412,7 +429,9 @@ header:not(.arco-panel-date-timepicker-title) {
   padding: 1.5rem;
   width: 100%;
   margin: 0 auto;
-  background-color: $main;
+  //background: var(--main-bg);
+  //background-size: cover;
+  background-color: var(--main);
   align-items: center;
 
   table {
@@ -422,25 +441,29 @@ header:not(.arco-panel-date-timepicker-title) {
 
 
 .card {
-  border-radius: $radius;
+  border-radius: var(--radius);
   border: 1px solid rgba(0, 0, 0, 0);
-  background-color: $main;
-  box-shadow: $shadow;
+  background-color: var(--main-side);
+  box-shadow: var(--shadow);
   padding: 0.6rem;
   margin: 1rem 0;
 }
 
 .card-label {
-  font-size: 1.3rem;
-  font-weight: bold;
+  font-size: var(--font-size-sub);
+  font-weight: var(--font-weight);
   margin: 0.5rem 1.5rem 0.5rem 1.5rem;
+  color: var(--text2);
+  font-family: var(--font);
 }
 
 .page-title {
-  font-size: 1.3rem;
-  font-weight: bold;
+  font-size: var(--font-size-sub);
+  font-weight: var(--font-weight);
   margin: 0 3rem 1rem 3rem;
   align-self: flex-start;
+  color: var(--text2);
+  font-family: var(--font);
 }
 
 .datetime-picker .select-picker {
@@ -468,24 +491,25 @@ header:not(.arco-panel-date-timepicker-title) {
 .picker-label {
   font-size: 1rem;
   margin: 0 0.5rem 0 1rem;
+  color: var(--text);
 }
 
 .arco-btn-primary .arco-btn-size-default {
-  box-shadow: $shadow-btn;
+  box-shadow: var(--shadow-btn);
 }
 
 .arco-btn-primary:not(.arco-btn-disabled), .arco-checkbox-checked .arco-checkbox-mask {
-  background-color: $theme;
+  background-color: var(--theme-light);
 }
 
 .arco-tooltip-content-inner {
-  color: $main !important;
+  color: var(--main) !important;
 }
 
 .col-id > .arco-table-cell > span {
   font-family: Consolas, monospace;
   font-size: 0.8rem;
-  background-color: $active-bg;
+  background-color: var(--active-bg);
   border-radius: 6px;
   border-style: solid;
   padding: 0.15rem 0.4rem;
@@ -496,7 +520,7 @@ header:not(.arco-panel-date-timepicker-title) {
 }
 
 .login-main {
-  background-color: $main;
+  background-color: var(--main);
   background-image: url("../assets/welcome.webp");
   background-size: cover;
   background-position: center;
@@ -571,11 +595,14 @@ header:not(.arco-panel-date-timepicker-title) {
 }
 
 .white-background {
-  background-color: $main;
+  background: var(--main-bg);
+  background-size: cover;
+  background-color: var(--main);
 }
 
 .deep-background {
-  background-color: $main-bg;
+  background-color: var(--main-bg);
+  background-size: cover;
 }
 
 .upper-btn {
@@ -592,7 +619,7 @@ header:not(.arco-panel-date-timepicker-title) {
 }
 
 .icon-info {
-  color: $theme;
+  color: var(--theme);
 }
 
 .icon-unknown {
@@ -621,3 +648,4 @@ header:not(.arco-panel-date-timepicker-title) {
     padding-right: 1.6rem;
   }
 }
+
