@@ -22,6 +22,7 @@
   --font-size: 1.5rem;
   --font-size-sub: 1.3rem;
   --font-weight: bold;
+  --title-fill-color: transparent;
 
   a {
     color: var(--text);
@@ -49,6 +50,7 @@
   --font: 'PangMenZhengDao-3';
   --font-size: 1.9rem;
   --font-size-sub: 1.6rem;
+  --title-fill-color: unset;
 }
 
 $small-width: 960px;
@@ -133,6 +135,9 @@ header:not(.arco-panel-date-timepicker-title) {
     span {
       width: 100%;
       text-overflow: ellipsis;
+      background: -webkit-linear-gradient(294deg, #00B4FF, #FF35F9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: var(--title-fill-color);
     }
   }
 }
